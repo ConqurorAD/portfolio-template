@@ -75,63 +75,54 @@ npm run start
 
 ## Customization Guide
 
-All personal content lives under `app/lib/`. Replace the dummy "John Doe" data with your own.
+### Single source of truth
 
-### 1. Core Data Files
+**All content is driven by one file:** `app/lib/config/portfolio.ts`. Edit that single
+config to change your name, role, location, social links, projects, page copy, SEO, and
+Open Graph text. There are no duplicate or hardcoded data files to keep in sync — every
+page, component, layout, sitemap, robots file, and generated OG image reads from this config.
 
-| File                                | What to change                                                        |
-| ----------------------------------- | --------------------------------------------------------------------- |
-| `app/lib/data/about.ts`             | Name, role, location, profile image, social links, introduction paragraphs, work experience, education, technical skills |
-| `app/lib/constants/social.ts`       | Social links used by the footer (GitHub, LinkedIn, Facebook, Instagram, Email) |
-| `app/lib/constants/location.ts`     | City, country, continent, timezone, flag emoji, map coordinates        |
-| `app/lib/data/tooltips.ts`          | Fun tooltip texts shown on hover over social/contact actions           |
-| `app/types/project.ts`              | Your projects: title, descriptions, role, tags, live URL, GitHub URL, featured flag |
+Helper modules that consume the config:
 
-> Note: keep the `image` paths pointing at your own files in `public/projects/`.
+| File                       | Purpose                                                              |
+| -------------------------- | ------------------------------------------------------------------- |
+| `app/lib/config/portfolio.ts` | The complete portfolio data (single source of truth)              |
+| `app/lib/icons.ts`         | Maps icon names (strings in the config) to Lucide components        |
+| `app/lib/seo.ts`           | Builds per-page metadata + breadcrumb structured data from config   |
+| `app/types/project.ts`     | Project query helpers (`getProjects`, `getFeaturedProjects`, ...)   |
 
-### 2. Hardcoded Text in Components
+To add or change content, follow these rules:
 
-Some display text is currently written directly inside components. Search for `John Doe` and replace every occurrence:
+- **Icons** are referenced by string name (e.g. `"github"`, `"ArrowRight"`). Add any new
+  icon name to the registry in `app/lib/icons.ts` (it already includes every icon used by
+  the template).
+- **Projects** live in `portfolio.projects` — add an entry with `title`, `description`,
+  `longDescription`, `role`, `image`, `tags`, `liveUrl`, `githubUrl`, and `featured`.
+- **Social links** live in `portfolio.socials` (name, href, icon name, tooltip).
+- **Page copy** (hero, home sections, about, contact, projects) lives under the matching
+  keys in `portfolio` (e.g. `portfolio.hero`, `portfolio.contactPage`, `portfolio.projectsPage`).
+- **Images** are referenced by path in `portfolio.images` and the project `image` fields.
 
-| File                                        | Contains                                                       |
-| ------------------------------------------- | -------------------------------------------------------------- |
-| `app/components/sections/Hero.tsx`          | Kicker line ("John Doe · Frontend Developer"), stats, CTA labels, portrait alt text |
-| `app/components/sections/HomeSections.tsx`  | Section headings, principle cards, status note                 |
-| `app/components/layout/Footer.tsx`          | Footer name, description, nav labels, share text, copyright    |
-| `app/(pages)/contact/page.tsx`              | Email address, phone number, action links, timezone text       |
-| `app/(pages)/projects/page.tsx`             | Page heading, work-index card labels, GitHub link              |
+> Note: keep the `image` paths pointing at your own files in `public/projects/` (and
+> `public/heroimage.png`, `public/about.png`, `public/imagecp.png`, `public/picofme.png`).
 
-Quick way to find them all:
+### SEO & Metadata
 
-```bash
-grep -rn "John Doe\|johndoe\|example.com" app/
-```
+All metadata, structured data, `sitemap.ts`, and `robots.ts` are generated from the config.
+Update the `url`, `seo`, `openGraph`, and `socials` sections of `portfolio.ts` — no other
+file needs editing for SEO changes.
 
-### 3. SEO & Metadata
+### Open Graph Images
 
-Update titles, descriptions, keywords, canonical URLs, and structured data:
-
-| File                                    | What to change                                                     |
-| --------------------------------------- | ------------------------------------------------------------------ |
-| `app/layout.tsx`                        | Global metadata: site URL (`metadataBase`), default title/description, keywords, Open Graph/Twitter cards |
-| `app/page.tsx`                          | Home page metadata + Person/WebSite/ProfilePage JSON-LD            |
-| `app/(pages)/about/layout.tsx`          | About page metadata + breadcrumb JSON-LD                           |
-| `app/(pages)/projects/layout.tsx`       | Projects page metadata + breadcrumb JSON-LD                        |
-| `app/(pages)/projects/page.tsx`         | ItemList JSON-LD for projects                                      |
-| `app/(pages)/contact/layout.tsx`        | Contact page metadata + breadcrumb JSON-LD                         |
-| `app/sitemap.ts`                        | Replace `BASE_URL` with your production domain                     |
-| `app/robots.ts`                         | Replace sitemap/host URLs with your production domain              |
-
-### 4. Open Graph Images
-
-Dynamic OG images are rendered from JSX. Update the text inside:
+OG images are rendered from JSX and read their text from the config (profile name, role,
+location, skills, and `openGraph.*` copy). They automatically stay in sync with your data.
 
 - `app/opengraph-image.tsx` (home)
 - `app/(pages)/about/opengraph-image.tsx`
 - `app/(pages)/projects/opengraph-image.tsx`
 - `app/(pages)/contact/opengraph-image.tsx`
 
-### 5. Replace Images
+### Replace Images
 
 Swap these files in `public/` with your own (keep the same filenames to avoid code changes):
 
@@ -185,9 +176,9 @@ app/
 		ui/                     # OptimizedImage, Tooltip, ThemeToggle, ProgressBar
 		animations/             # MagneticWrapper
 	lib/
-		config/portfolio.ts     # Central portfolio config (reference/template values)
-		constants/              # Static constants (location, socials)
-		data/                   # About/profile/tooltips data
+		config/portfolio.ts     # Central portfolio config — single source of truth
+		icons.ts                # Icon name → Lucide component registry
+		seo.ts                  # Per-page metadata + breadcrumb JSON-LD builders
 		hooks/                  # useTime, useMousePosition
 		utils/                  # cn() class-name helper
 	types/                    # Shared app-level types + project data
@@ -207,9 +198,8 @@ public/
 
 ## SEO Checklist Before Going Live
 
-1. Replace every `https://www.example.com` occurrence with your real domain.
-2. Update `app/sitemap.ts` and `app/robots.ts`.
-3. Add your `GOOGLE_VERIFICATION` token to `.env.local` and verify in Google Search Console.
+1. Set `url` in `app/lib/config/portfolio.ts` to your real domain (this drives metadata, sitemap, and robots).
+2. Add your `GOOGLE_VERIFICATION` token to `.env.local` and verify in Google Search Console.
 4. Optionally add your `UMAMI_ID` for privacy-friendly analytics.
 5. Deploy, then submit your sitemap: `https://your-domain.com/sitemap.xml`.
 

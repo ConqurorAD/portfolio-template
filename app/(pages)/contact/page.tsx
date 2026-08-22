@@ -4,20 +4,17 @@ import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   Calendar,
-  Github,
-  Instagram,
-  Linkedin,
   Mail,
   MapPin,
   Phone,
 } from "lucide-react";
 
 import OptimizedImage from "@/app/components/ui/OptimizedImage";
-import { LOCATION } from "@/app/lib/constants/location";
+import { Icon } from "@/app/lib/icons";
+import portfolio from "@/app/lib/config/portfolio";
 
 export default function Contact() {
-  const city = LOCATION.city;
-  const country = LOCATION.country;
+  const { geo, contact, contactPage, profile, images } = portfolio;
 
   return (
     <section id="contact" className="relative px-4 py-16 sm:px-6 lg:py-20">
@@ -35,7 +32,7 @@ export default function Contact() {
               viewport={{ once: true }}
               className="section-kicker"
             >
-              <span>Let’s connect</span>
+              <span>{contactPage.kicker}</span>
             </motion.div>
 
             <motion.h1
@@ -45,8 +42,14 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               className="text-[clamp(3rem,9vw,6.5rem)] font-semibold leading-[0.92] tracking-tight text-white"
             >
-              <span className="block">Let’s build</span>
-              <span className="block text-gradient">something useful</span>
+              {contactPage.heading.map((line) => (
+                <span
+                  key={line.text}
+                  className={`block ${line.gradient ? "text-gradient" : ""}`}
+                >
+                  {line.text}
+                </span>
+              ))}
             </motion.h1>
 
             <motion.p
@@ -56,11 +59,12 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="max-w-2xl text-pretty text-base leading-7 text-white/72 sm:text-lg"
             >
-              If you need a frontend developer for React, Next.js, or TypeScript
-              work, send me a message.
-              <br />
-              I’m open to freelance work, collaborations, and thoughtful product
-              builds.
+              {contactPage.intro.split("\n").map((line, index, arr) => (
+                <span key={line}>
+                  {line}
+                  {index < arr.length - 1 && <br />}
+                </span>
+              ))}
             </motion.p>
           </div>
 
@@ -72,8 +76,8 @@ export default function Contact() {
             className="relative min-h-96 overflow-hidden rounded-4xl border border-white/10 bg-black/20 sm:min-h-[28rem] lg:min-h-[32rem]"
           >
             <OptimizedImage
-              src="/imagecp.png"
-              alt="John Doe portrait"
+              src={images.contact}
+              alt={`${profile.name} portrait`}
               fill
               priority
               className="absolute inset-0 z-0 object-cover object-[50%_18%]"
@@ -87,7 +91,7 @@ export default function Contact() {
             <div className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="rounded-full border border-white/10 bg-black/70 px-3 py-1.5 text-xs uppercase tracking-[0.24em] text-white/70 sm:bg-black/35 sm:backdrop-blur-md">
-                  You’re Still Here?
+                  {contactPage.imageBadge}
                 </div>
               </div>
             </div>
@@ -106,11 +110,10 @@ export default function Contact() {
                 <div className="space-y-3">
                   <h2 className="inline-flex items-center gap-2.5 text-2xl font-semibold text-white sm:text-3xl">
                     <Mail className="h-5 w-5 text-brand-primary" />
-                    Drop me a line
+                    {contactPage.emailCardTitle}
                   </h2>
                   <p className="max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
-                    The fastest way to reach me. I check email throughout the
-                    day and usually reply within a few hours.
+                    {contactPage.emailCardText}
                   </p>
                 </div>
 
@@ -123,28 +126,28 @@ export default function Contact() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-55" />
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
                   </span>
-                  <span className="leading-5">
-                    Response time: faster than her replies
-                  </span>
+                  <span className="leading-5">{contactPage.responseTime}</span>
                 </div>
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <a
-                  href="mailto:hello@johndoe.dev"
+                  href={`mailto:${contact.email}`}
                   className="inline-flex max-w-full items-center gap-2 break-all rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
                 >
-                  hello@johndoe.dev
+                  {contact.email}
                   <Mail className="h-4 w-4" />
                 </a>
 
-                <a
-                  href="tel:+1-555-0100"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.06]"
-                >
-                  <Phone className="h-4 w-4 text-brand-signal" />
-                  Quick call
-                </a>
+                {contact.showPhone && contact.phone && (
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.06]"
+                  >
+                    <Phone className="h-4 w-4 text-brand-signal" />
+                    Quick call
+                  </a>
+                )}
               </div>
             </motion.div>
 
@@ -152,14 +155,14 @@ export default function Contact() {
               <InfoCard
                 icon={<MapPin className="h-5 w-5 text-brand-primary" />}
                 title="Based in"
-                body="Working remotely from the beautiful city of lakes."
-                footer={`${city}, ${country}`}
+                body={contactPage.basedInBody}
+                footer={`${geo.city}, ${geo.country}`}
               />
               <InfoCard
                 icon={<Calendar className="h-5 w-5 text-brand-signal" />}
                 title="Timezone"
-                body="UTC-6. Usually online from 9 AM to 6 PM."
-                footer={LOCATION.timezone}
+                body={contactPage.timezoneBody}
+                footer={geo.timezone ?? ""}
               />
             </div>
           </div>
@@ -171,33 +174,26 @@ export default function Contact() {
               viewport={{ once: true }}
               className="section-shell p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-semibold text-white">Take action</h2>
+              <h2 className="text-2xl font-semibold text-white">
+                {contactPage.takeActionTitle}
+              </h2>
               <p className="mt-3 max-w-xl text-sm leading-7 text-white/72">
-                Choose the next step that works best for you.
+                {contactPage.takeActionText}
               </p>
 
               <div className="mt-6 space-y-3">
-                <ActionLink
-                  href="https://github.com/johndoe"
-                  icon={<Github className="h-5 w-5 text-brand-primary" />}
-                  title="View GitHub"
-                  body="Explore repositories and recent code."
-                  external
-                />
-                <ActionLink
-                  href="https://linkedin.com/in/johndoe"
-                  icon={<Linkedin className="h-5 w-5 text-brand-signal" />}
-                  title="Connect on LinkedIn"
-                  body="View my professional profile and experience."
-                  external
-                />
-                <ActionLink
-                  href="https://instagram.com/johndoe"
-                  icon={<Instagram className="h-5 w-5 text-brand-primary" />}
-                  title="Follow on Instagram"
-                  body="See updates and moments beyond work."
-                  external
-                />
+                {contactPage.actions.map((action) => {
+                  return (
+                    <ActionLink
+                      key={action.title}
+                      href={action.href}
+                      icon={<Icon name={action.icon} className="h-5 w-5 text-brand-primary" />}
+                      title={action.title}
+                      body={action.body}
+                      external
+                    />
+                  );
+                })}
               </div>
             </motion.div>
           </div>

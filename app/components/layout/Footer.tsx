@@ -2,48 +2,40 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Coffee,
-  Code2,
-  Facebook,
-  Linkedin,
-  Share2,
-  Twitter,
-} from "lucide-react";
+import { ArrowUpRight, Coffee, Code2, Share2 } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import confetti from "canvas-confetti";
 
 import MagneticWrapper from "@/app/components/animations/MagneticWrapper";
-import { SOCIAL_LINKS } from "@/app/lib/constants/social";
+import { Icon } from "@/app/lib/icons";
+import portfolio from "@/app/lib/config/portfolio";
 
 export default function Footer() {
   const pathname = usePathname();
   const [clicks, setClicks] = useState(0);
   const [shareStatus, setShareStatus] = useState("");
   const currentYear = new Date().getFullYear();
-  const shareUrl = "https://www.example.com";
-  const shareText = "John Doe | Frontend Developer";
+  const shareUrl = portfolio.url;
+  const shareText = portfolio.footer.shareTitle;
 
   const shareLinks = [
     {
       name: "Share on LinkedIn",
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-      icon: Linkedin,
+      icon: "linkedin",
     },
     {
       name: "Share on Facebook",
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-      icon: Facebook,
+      icon: "facebook",
     },
     {
       name: "Share on X",
       href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
-      icon: Twitter,
+      icon: "twitter",
     },
   ] as const;
-
   const handleLogoClick = () => {
     setClicks((prev) => prev + 1);
 
@@ -85,12 +77,10 @@ export default function Footer() {
               whileTap={{ scale: 0.97 }}
               className="text-left text-2xl font-semibold tracking-tight text-white"
             >
-              John Doe
+              {portfolio.profile.name}
             </motion.button>
             <p className="max-w-md text-sm leading-7 text-white/68">
-              A personal portfolio for John Doe, a frontend developer from
-              Springfield, USA, focused on React, Next.js, TypeScript, and
-              modern web applications.
+              {portfolio.footer.description}
             </p>
             <p className="text-xs uppercase tracking-[0.26em] text-white/45">
               {clicks}/5 clicks for a tiny celebration
@@ -102,12 +92,7 @@ export default function Footer() {
               Navigate
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-white/78">
-              {[
-                { label: "John’s homepage", href: "/" },
-                { label: "About John", href: "/about" },
-                { label: "Selected projects", href: "/projects" },
-                { label: "Contact John", href: "/contact" },
-              ].map((link) => (
+              {portfolio.footer.nav.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -126,8 +111,7 @@ export default function Footer() {
               Connect
             </h3>
             <div className="mt-4 flex flex-wrap gap-3">
-              {SOCIAL_LINKS.map((social) => {
-                const Icon = social.icon;
+              {portfolio.socials.map((social) => {
                 return (
                   <MagneticWrapper key={social.name} strength={0.35}>
                     <a
@@ -138,7 +122,7 @@ export default function Footer() {
                       aria-label={social.name}
                       title={social.tooltip}
                     >
-                      <Icon className="h-4 w-4 text-brand-primary" />
+                      <Icon name={social.icon} className="h-4 w-4 text-brand-primary" />
                       {social.name}
                     </a>
                   </MagneticWrapper>
@@ -150,23 +134,21 @@ export default function Footer() {
               Share portfolio
             </h3>
             <div className="mt-4 flex items-center gap-2">
-              {shareLinks.map((link) => {
-                const Icon = link.icon;
-
-                return (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.name}
-                    title={link.name}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#141414] text-white/75 transition-colors hover:bg-[#1c1c1c] hover:text-white"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                );
-              })}
+            {shareLinks.map((link) => {
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.name}
+                  title={link.name}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[#141414] text-white/75 transition-colors hover:bg-[#1c1c1c] hover:text-white"
+                >
+                  <Icon name={link.icon} className="h-4 w-4" />
+                </a>
+              );
+            })}
               <button
                 type="button"
                 onClick={handleNativeShare}
@@ -184,7 +166,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-4 flex flex-col gap-3 pt-6 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {currentYear} John Doe. All rights reserved.</p>
+          <p>© {currentYear} {portfolio.footer.copyright}. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap">
             <span>Made with</span>
             <Coffee className="h-4 w-4 text-brand-signal" />

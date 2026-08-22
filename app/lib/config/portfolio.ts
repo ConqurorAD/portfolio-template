@@ -24,6 +24,13 @@ const portfolio: PortfolioConfig = {
     },
   },
 
+  images: {
+    hero: "/heroimage.png",
+    about: "/about.png",
+    contact: "/imagecp.png",
+    seoFallback: "/picofme.png",
+  },
+
   seo: {
     title: "John Doe | Frontend Developer in Springfield, USA",
     titleTemplate: "%s | John Doe",
@@ -67,38 +74,42 @@ const portfolio: PortfolioConfig = {
     {
       name: "GitHub",
       href: "https://github.com/johndoe",
-      icon: "github",
+      icon: "Github",
       tooltip: "Where I store my bugs... ",
     },
     {
       name: "LinkedIn",
       href: "https://www.linkedin.com/in/johndoe/",
-      icon: "linkedin",
+      icon: "Linkedin",
       tooltip: "Professional me (I promise I'm fun) ",
     },
     {
       name: "Facebook",
       href: "https://facebook.com/johndoe",
-      icon: "facebook",
+      icon: "Facebook",
       tooltip: "Daily dose of nostalgia & drama ",
     },
     {
       name: "Instagram",
       href: "https://instagram.com/johndoe",
-      icon: "instagram",
+      icon: "Instagram",
       tooltip: "Reels, vibes & fake perfection ",
     },
     {
       name: "Email",
       href: "mailto:hello@johndoe.dev",
-      icon: "mail",
+      icon: "Mail",
       tooltip: "Let's build something cool together ",
     },
   ],
 
   hero: {
     kicker: "John Doe · Frontend Developer",
-    heading: "Building fast, thoughtful digital experiences.",
+    heading: [
+      { text: "Building fast," },
+      { text: "thoughtful digital" },
+      { text: "experiences.", gradient: true },
+    ],
     primaryCta: { label: "View projects", href: "/projects", icon: "ArrowRight" },
     secondaryCta: { label: "About John", href: "/about", icon: "ChevronRight" },
   },
@@ -136,6 +147,8 @@ const portfolio: PortfolioConfig = {
     workTitle: "What I’ve Been Cooking",
     workDescription:
       "A selection of React and Next.js projects focused on thoughtful design and solid frontend experiences.",
+    aboutCta: { label: "Learn more about John", href: "/about", icon: "ArrowRight" },
+    projectsCta: { label: "View all projects", href: "/projects", icon: "ArrowRight" },
   },
 
   status: {
@@ -160,14 +173,108 @@ const portfolio: PortfolioConfig = {
       { label: "Contact John", href: "/contact" },
     ],
     shareTitle: "John Doe | Frontend Developer",
+    copyright: "John Doe",
+  },
+
+  projects: [
+    {
+      id: "1",
+      title: "Wordly",
+      description:
+        "A modern slang dictionary built for discovering and understanding internet slang.",
+      longDescription:
+        "Wordly is a community-driven dictionary where users can explore, search, and discover trending slang, meanings, examples, and popular terms through a fast and interactive interface.",
+      role: "Frontend design and development",
+      image: "/projects/slang.png",
+      tags: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
+      liveUrl: "https://example.com/wordly-demo",
+      githubUrl: null,
+      featured: true,
+    },
+    {
+      id: "2",
+      title: "Community Hub",
+      description:
+        "A community website built to organize events, identity, and updates.",
+      longDescription:
+        "Designed and developed a website for a local community with event discovery, club profiles, and reusable content sections for future growth.",
+      role: "Design and frontend development",
+      image: "/projects/projectone.png",
+      tags: ["React"],
+      liveUrl: "https://example.com/community-hub-demo",
+      githubUrl: "https://github.com/johndoe/community-hub",
+      featured: false,
+    },
+    {
+      id: "3",
+      title: "Secure Document Signing Platform",
+      description:
+        "A secure signature workflow with verification and audit trails.",
+      longDescription:
+        "A digital signature platform that enables secure document signing with verification steps, signing flows, and audit-friendly history.",
+      role: "Frontend ",
+      image: "/projects/projecttwo.png",
+      tags: ["React", "Node.js", "MongoDB"],
+      liveUrl: "https://example.com/signflow-demo",
+      githubUrl: "https://github.com/johndoe/signflow",
+      featured: false,
+    },
+    {
+      id: "4",
+      title: "CityPulse",
+      description:
+        "A civic issue reporting platform designed to help citizens report, track, and engage with local community problems.",
+      longDescription:
+        "CityPulse is a location-aware civic platform that makes it easier for citizens to report local issues, track their progress, and stay informed about problems in their community through an interactive and user-friendly interface.",
+      role: "Frontend design and development",
+      image: "/projects/civiceye.png",
+      tags: ["React", "TypeScript", "Maps", "Geolocation"],
+      liveUrl: "https://example.com/citypulse-demo",
+      githubUrl: "https://github.com/johndoe/citypulse-frontend",
+      featured: true,
+    },
+  ],
+
+  projectsPage: {
+    kicker: "Selected work",
+    heading: [
+      { text: "Selected projects," },
+      { text: "built to solve" },
+      { text: "real problems.", gradient: true },
+    ],
+    description:
+      "A selection of React and Next.js projects spanning e-commerce, community platforms, and modern web applications.",
+    indexCard: {
+      title: "Work index",
+      countLabel: "Selected projects",
+      focusLabel: "Primary focus",
+      focusValue: "Frontend",
+      toolsLabel: "Main tools",
+      toolsValue: "React · Next.js",
+      footer: "From product interfaces to practical web applications.",
+    },
+    moreText:
+      "More experiments, prototypes, and older work live on GitHub.",
+    moreCtaLabel: "Explore more on GitHub",
+  },
+
+  aboutPage: {
+    profileBadge: "Profile",
+    introductionTitle: "Introduction",
+    experienceTitle: "Work Experience",
+    educationTitle: "Education",
+    skillsTitle: "Technical Skills",
   },
 
   contactPage: {
     kicker: "Let’s connect",
-    heading: "Let’s build",
-    headingHighlight: "something useful",
+    heading: [
+      { text: "Let’s build" },
+      { text: "something useful", gradient: true },
+    ],
     intro:
       "If you need a frontend developer for React, Next.js, or TypeScript work, send me a message.\nI’m open to freelance work, collaborations, and thoughtful product builds.",
+    imageBadge: "You’re Still Here?",
     emailCardTitle: "Drop me a line",
     emailCardText:
       "The fastest way to reach me. I check email throughout the day and usually reply within a few hours.",
@@ -176,20 +283,26 @@ const portfolio: PortfolioConfig = {
     timezoneBody: "UTC-6. Usually online from 9 AM to 6 PM.",
     takeActionTitle: "Take action",
     takeActionText: "Choose the next step that works best for you.",
-    actions: {
-      github: {
+    actions: [
+      {
         title: "View GitHub",
         body: "Explore repositories and recent code.",
+        href: "https://github.com/johndoe",
+        icon: "Github",
       },
-      linkedin: {
+      {
         title: "Connect on LinkedIn",
         body: "View my professional profile and experience.",
+        href: "https://www.linkedin.com/in/johndoe/",
+        icon: "Linkedin",
       },
-      instagram: {
+      {
         title: "Follow on Instagram",
         body: "See updates and moments beyond work.",
+        href: "https://instagram.com/johndoe",
+        icon: "Instagram",
       },
-    },
+    ],
   },
 
   openGraph: {
@@ -258,6 +371,7 @@ ideas into interfaces that are simple to use and simple to extend.
       period: "May 24, 2026 — Present",
       description:
         "Building and maintaining production-ready frontend experiences with React, reusable UI systems, and performance-focused improvements.",
+      current: true,
     },
   ],
 
@@ -266,6 +380,7 @@ ideas into interfaces that are simple to use and simple to extend.
       title: "BSc Computer Science",
       school: "State University",
       info: "Final year",
+      current: true,
     },
     {
       title: "High School Diploma",

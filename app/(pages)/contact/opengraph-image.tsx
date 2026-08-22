@@ -1,4 +1,7 @@
 import { ImageResponse } from "next/og";
+import portfolio from "@/app/lib/config/portfolio";
+
+const { profile, openGraph } = portfolio;
 
 export const size = {
   width: 1200,
@@ -86,50 +89,50 @@ export default function ContactOpenGraphImage() {
               letterSpacing: 1.5,
               textTransform: "uppercase",
             }}
-          >
-            Contact
+            >
+              {openGraph.contact.subtitle}
+            </div>
           </div>
-        </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: 900,
-          }}
-        >
           <div
             style={{
-              fontSize: 24,
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.58)",
+              display: "flex",
+              flexDirection: "column",
+              maxWidth: 900,
             }}
           >
-            John Doe
+            <div
+              style={{
+                fontSize: 24,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.58)",
+              }}
+            >
+              {profile.name}
+            </div>
+            <div
+              style={{
+                marginTop: 18,
+                fontSize: 86,
+                lineHeight: 0.94,
+                fontWeight: 700,
+                letterSpacing: -3,
+              }}
+            >
+              {openGraph.contact.subtitle}
+            </div>
+            <div
+              style={{
+                marginTop: 20,
+                fontSize: 30,
+                lineHeight: 1.35,
+                color: "rgba(255,255,255,0.78)",
+              }}
+            >
+              {openGraph.contact.description}
+            </div>
           </div>
-          <div
-            style={{
-              marginTop: 18,
-              fontSize: 86,
-              lineHeight: 0.94,
-              fontWeight: 700,
-              letterSpacing: -3,
-            }}
-          >
-            Contact
-          </div>
-          <div
-            style={{
-              marginTop: 20,
-              fontSize: 30,
-              lineHeight: 1.35,
-              color: "rgba(255,255,255,0.78)",
-            }}
-          >
-            Available for frontend work, collaborations, and freelance projects.
-          </div>
-        </div>
       </div>
     </div>,
     size,

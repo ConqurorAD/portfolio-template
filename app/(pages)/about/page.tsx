@@ -7,23 +7,12 @@ import {
   Code2,
   GraduationCap,
   MapPin,
-  Github,
-  Linkedin,
-  Facebook,
-  Instagram,
 } from "lucide-react";
 
 import Tooltip from "@/app/components/ui/Tooltip";
 import OptimizedImage from "@/app/components/ui/OptimizedImage";
-import { getAboutData } from "@/app/lib/data/about";
-import { tooltips } from "@/app/lib/data/tooltips";
-
-const socialIcons = {
-  github: Github,
-  linkedin: Linkedin,
-  facebook: Facebook,
-  instagram: Instagram,
-};
+import { Icon } from "@/app/lib/icons";
+import portfolio from "@/app/lib/config/portfolio";
 
 const skillIcons = {
   React: LucideIcons.Atom,
@@ -59,12 +48,14 @@ const itemVariants: Variants = {
 export default function About() {
   const {
     profile,
-    socialLinks,
+    images,
+    socials,
     introduction,
     workExperience,
-    studies,
-    technicalSkills,
-  } = getAboutData();
+    education,
+    skills,
+    aboutPage,
+  } = portfolio;
 
   return (
     <section id="about" className="px-4 py-16 sm:px-6 lg:py-20">
@@ -78,7 +69,7 @@ export default function About() {
           >
             <div className="mx-auto w-full max-w-60 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20">
               <OptimizedImage
-                src={profile.image}
+                src={images.about}
                 alt={profile.name}
                 width={640}
                 height={640}
@@ -89,7 +80,7 @@ export default function About() {
 
             <div className="mt-6 space-y-3 text-center">
               <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-                Profile
+                {aboutPage.profileBadge}
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-white">
                 {profile.name}
@@ -110,22 +101,17 @@ export default function About() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-2 gap-3"
           >
-            {socialLinks.map((link) => {
-              const Icon = socialIcons[link.icon as keyof typeof socialIcons];
-
+            {socials.map((link) => {
               return (
-                <Tooltip
-                  key={link.name}
-                  content={tooltips[link.icon as keyof typeof tooltips]}
-                >
+                <Tooltip key={link.name} content={link.tooltip ?? ""}>
                   <a
-                    href={link.url}
+                    href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="surface flex items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm text-white/84 transition-colors hover:border-white/18 hover:bg-white/6"
                   >
                     <span>{link.name}</span>
-                    <Icon className="h-4 w-4 text-brand-primary" />
+                    <Icon name={link.icon} className="h-4 w-4 text-brand-primary" />
                   </a>
                 </Tooltip>
               );
@@ -147,7 +133,7 @@ export default function About() {
             >
               <div className="h-px w-10 bg-(--brand-primary)" />
               <p className="text-xs uppercase tracking-[0.28em] text-white/50">
-                Introduction
+                {aboutPage.introductionTitle}
               </p>
             </motion.div>
 
@@ -179,7 +165,7 @@ export default function About() {
               >
                 <Briefcase className="h-5 w-5 text-brand-primary" />
                 <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  Work Experience
+                  {aboutPage.experienceTitle}
                 </h2>
               </motion.div>
 
@@ -189,7 +175,7 @@ export default function About() {
                   className="absolute bottom-6 left-[7px] top-6 w-px bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.65))]"
                 />
                 {workExperience.map((job) => {
-                  const isCurrent = job.period.includes("Present");
+                  const isCurrent = job.current ?? job.period.includes("Present");
 
                   return (
                   <motion.article
@@ -249,7 +235,7 @@ export default function About() {
               >
                 <GraduationCap className="h-5 w-5 text-brand-signal" />
                 <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  Education
+                  {aboutPage.educationTitle}
                 </h2>
               </motion.div>
 
@@ -258,8 +244,8 @@ export default function About() {
                   aria-hidden="true"
                   className="absolute bottom-6 left-[7px] top-6 w-px bg-[linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.16))]"
                 />
-                {studies.map((item) => {
-                  const isCurrent = item.title === "BSc Computer Science";
+                {education.map((item) => {
+                  const isCurrent = item.current ?? false;
 
                   return (
                   <motion.article
@@ -315,12 +301,12 @@ export default function About() {
               >
                 <Code2 className="h-5 w-5 text-brand-primary" />
                 <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  Technical Skills
+                  {aboutPage.skillsTitle}
                 </h2>
               </motion.div>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-3">
-              {Object.entries(technicalSkills).map(([category, skills]) => (
+              {Object.entries(skills).map(([category, categorySkills]) => (
                 <motion.div
                   key={category}
                   variants={itemVariants}
@@ -330,7 +316,7 @@ export default function About() {
                     {category.charAt(0).toUpperCase() + category.slice(1)}
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
-                    {skills.map((skill) => {
+                    {categorySkills.map((skill) => {
                       const Icon =
                         skillIcons[skill as keyof typeof skillIcons] ||
                         LucideIcons.Code2;
@@ -359,3 +345,4 @@ export default function About() {
     </section>
   );
 }
+

@@ -6,14 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ui/ThemeToggle";
 import MagneticWrapper from "@/app/components/animations/MagneticWrapper";
-import { Home, Briefcase, User, Mail } from "lucide-react";
+import { Icon } from "@/app/lib/icons";
+import portfolio from "@/app/lib/config/portfolio";
 
-const navItems = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "About", href: "/about", icon: User },
-  { label: "Work", href: "/projects", icon: Briefcase },
-  { label: "Contact", href: "/contact", icon: Mail },
-] as const;
+const navItems = portfolio.navigation;
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -32,7 +28,6 @@ export default function Navigation() {
             item.href === "/"
               ? pathname === "/"
               : pathname.startsWith(item.href);
-          const Icon = item.icon;
           return (
             <MagneticWrapper key={item.href} strength={0.12}>
               <Link
@@ -46,7 +41,7 @@ export default function Navigation() {
                     : "text-zinc-300 hover:text-white",
                 )}
               >
-                <Icon className="h-6 w-6 sm:h-4 sm:w-4" />
+                <Icon name={item.icon} className="h-6 w-6 sm:h-4 sm:w-4" />
                 <span className="hidden md:inline">{item.label}</span>
               </Link>
             </MagneticWrapper>

@@ -6,17 +6,22 @@ import { ArrowUpRight, Github } from "lucide-react";
 
 import { getProjects } from "@/app/types/project";
 import OptimizedImage from "@/app/components/ui/OptimizedImage";
+import portfolio from "@/app/lib/config/portfolio";
 
 export default function Projects() {
   const projects = getProjects();
-  const siteUrl = "https://www.example.com";
+  const { projectsPage, profile, socials, sections } = portfolio;
+  const siteUrl = portfolio.url;
+  const github = socials.find((social) => social.icon === "Github");
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "John Doe Projects",
+    name: `${profile.name} Projects`,
     description:
-      "Selected frontend projects by John Doe, built with React, Next.js, and TypeScript.",
+      "Selected frontend projects by " +
+      profile.name +
+      ", built with React, Next.js, and TypeScript.",
     itemListElement: projects.map((project, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -57,7 +62,7 @@ export default function Projects() {
               viewport={{ once: true }}
               className="section-kicker w-fit"
             >
-              <span>Selected work</span>
+              <span>{projectsPage.kicker}</span>
             </motion.div>
 
             <motion.h1
@@ -67,9 +72,14 @@ export default function Projects() {
               transition={{ duration: 0.8 }}
               className="text-[clamp(1.9rem,5vw,4rem)] font-semibold leading-[1.04] tracking-tight text-white"
             >
-              <span className="block">Selected projects,</span>
-              <span className="block">built to solve</span>
-              <span className="block text-gradient">real problems.</span>
+              {projectsPage.heading.map((line) => (
+                <span
+                  key={line.text}
+                  className={`block ${line.gradient ? "text-gradient" : ""}`}
+                >
+                  {line.text}
+                </span>
+              ))}
             </motion.h1>
 
             <motion.p
@@ -79,8 +89,7 @@ export default function Projects() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="max-w-2xl text-pretty text-base leading-7 text-white/72 sm:text-lg"
             >
-              A selection of React and Next.js projects spanning e-commerce,
-              community platforms, and modern web applications.
+              {projectsPage.description}
             </motion.p>
           </div>
 
@@ -94,7 +103,7 @@ export default function Projects() {
             <div className="border border-white/10">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
                 <span className="text-xs uppercase tracking-[0.24em] text-white/45">
-                  Work index
+                  {projectsPage.indexCard.title}
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.2em] text-white/35">
                   {new Date().getFullYear()}
@@ -107,27 +116,29 @@ export default function Projects() {
                     {String(projects.length).padStart(2, "0")}
                   </p>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-                    Selected projects
-                  </p>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 px-5 py-4">
-                  <p className="text-base font-semibold text-white">Frontend</p>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-                    Primary focus
+                    {projectsPage.indexCard.countLabel}
                   </p>
                 </div>
                 <div className="flex items-baseline justify-between gap-4 px-5 py-4">
                   <p className="text-base font-semibold text-white">
-                    React · Next.js
+                    {projectsPage.indexCard.focusValue}
                   </p>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-                    Main tools
+                    {projectsPage.indexCard.focusLabel}
+                  </p>
+                </div>
+                <div className="flex items-baseline justify-between gap-4 px-5 py-4">
+                  <p className="text-base font-semibold text-white">
+                    {projectsPage.indexCard.toolsValue}
+                  </p>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
+                    {projectsPage.indexCard.toolsLabel}
                   </p>
                 </div>
               </div>
 
               <p className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-white/68">
-                From product interfaces to practical web applications.
+                {projectsPage.indexCard.footer}
               </p>
             </div>
           </motion.div>
@@ -185,7 +196,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
                     >
-                      Live demo
+                      {sections.projectLabels.live}
                       <ArrowUpRight className="h-4 w-4" />
                     </Link>
                   )}
@@ -197,7 +208,7 @@ export default function Projects() {
                       className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white/82 transition-colors hover:bg-white/[0.06]"
                     >
                       <Github className="h-4 w-4" />
-                      Source
+                      {sections.projectLabels.source}
                     </Link>
                   )}
                 </div>
@@ -212,19 +223,21 @@ export default function Projects() {
               {projects.length} projects in the portfolio
             </p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
-              More experiments, prototypes, and older work live on GitHub.
+              {projectsPage.moreText}
             </p>
           </div>
 
-          <Link
-            href="https://github.com/johndoe"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.07]"
-          >
-            Explore more on GitHub
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
+          {github && (
+            <Link
+              href={github.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.07]"
+            >
+              {projectsPage.moreCtaLabel}
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          )}
         </div>
       </div>
     </section>

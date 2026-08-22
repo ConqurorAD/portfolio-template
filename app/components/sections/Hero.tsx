@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronRight } from "lucide-react";
-
-import OptimizedImage from "../ui/OptimizedImage";
-import { getProjects } from "@/app/types/project";
+import OptimizedImage from "@/app/components/ui/OptimizedImage";
+import { Icon } from "@/app/lib/icons";
+import portfolio from "@/app/lib/config/portfolio";
 
 export default function Hero() {
+  const { hero, heroStats, profile, sections, images } = portfolio;
+
   return (
     <section
       id="home"
@@ -21,9 +22,7 @@ export default function Hero() {
             transition={{ duration: 0.7 }}
             className="section-kicker w-fit"
           >
-            <span className="whitespace-nowrap">
-              John Doe · Frontend Developer
-            </span>
+            <span className="whitespace-nowrap">{hero.kicker}</span>
           </motion.div>
 
           <motion.h1
@@ -32,50 +31,40 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="hidden max-w-3xl text-[clamp(2rem,5.25vw,5.25rem)] font-semibold leading-[1.03] tracking-tight text-white sm:block"
           >
-            <span className="block ">Building fast,</span>
-            <span className="block ">
-              <span className="text-white">thoughtful</span> digital
-            </span>
-            <span className="block text-gradient ">experiences.</span>
+            {hero.heading.map((line) => (
+              <span
+                key={line.text}
+                className={`block ${line.gradient ? "text-gradient" : ""}`}
+              >
+                {line.text}
+              </span>
+            ))}
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-wrap items-center gap-x-7 gap-y-4"
-          >
-            <div>
-              <p className="text-2xl font-semibold tracking-tight text-white">
-                4
-              </p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/45">
-                Projects in portfolio
-              </p>
-            </div>
-
-            <div className="hidden h-9 w-px bg-white/10 sm:block" />
-
-            <div>
-              <p className="text-lg font-semibold tracking-tight text-white">
-                React · Next.js
-              </p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/45">
-                Core stack
-              </p>
-            </div>
-
-            <div className="hidden h-9 w-px bg-white/10 sm:block" />
-
-            <div>
-              <p className="text-lg font-semibold tracking-tight text-white">
-                Springfield, USA
-              </p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/45">
-                Based in
-              </p>
-            </div>
-          </motion.div>
+          {sections.showHeroStats && (
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex flex-wrap items-center gap-x-7 gap-y-4"
+            >
+              {heroStats.map((stat, index) => (
+                <div key={stat.label} className="contents">
+                  {index > 0 && (
+                    <div className="hidden h-9 w-px bg-white/10 sm:block" />
+                  )}
+                  <div>
+                    <p className="text-2xl font-semibold tracking-tight text-white">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/45">
+                      {stat.label}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -84,18 +73,18 @@ export default function Hero() {
             className="flex flex-wrap gap-3"
           >
             <Link
-              href="/projects"
+              href={hero.primaryCta.href}
               className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition-transform duration-300 hover:-translate-y-0.5"
             >
-              View projects
-              <ArrowRight className="h-4 w-4" />
+              {hero.primaryCta.label}
+              <Icon name={hero.primaryCta.icon} className="h-4 w-4" />
             </Link>
             <Link
-              href="/about"
+              href={hero.secondaryCta.href}
               className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/4 px-5 py-3 text-sm font-semibold text-white/88 transition-colors duration-300 hover:border-white/20 hover:bg-white/6"
             >
-              About John
-              <ChevronRight className="h-4 w-4 text-brand-primary" />
+              {hero.secondaryCta.label}
+              <Icon name={hero.secondaryCta.icon} className="h-4 w-4 text-brand-primary" />
             </Link>
           </motion.div>
         </div>
@@ -108,8 +97,8 @@ export default function Hero() {
         >
           <div className="relative min-h-112 sm:min-h-128">
             <OptimizedImage
-              src="/heroimage.png"
-              alt="John Doe portrait"
+              src={images.hero}
+              alt={`${profile.name} portrait`}
               fill
               priority
               className="absolute inset-0 z-0 object-cover object-[50%_18%] "
@@ -119,18 +108,18 @@ export default function Hero() {
               aria-hidden="true"
               className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(5,5,5,0.12)_0%,rgba(5,5,5,0.24)_34%,rgba(5,5,5,0.72)_100%)]"
             />
-
-            
           </div>
 
-          <div className="surface m-4 rounded-2xl p-2 sm:m-3 sm:p-3">
-            <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-              Availability
-            </p>
-            <p className="mt-3 text-base font-semibold text-white">
-              Open for frontend and product work
-            </p>
-          </div>
+          {sections.showAvailability && (
+            <div className="surface m-4 rounded-2xl p-2 sm:m-3 sm:p-3">
+              <p className="text-xs uppercase tracking-[0.24em] text-white/45">
+                Availability
+              </p>
+              <p className="mt-3 text-base font-semibold text-white">
+                {profile.availability}
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

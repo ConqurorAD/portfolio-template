@@ -1,4 +1,7 @@
 import { ImageResponse } from "next/og";
+import portfolio from "@/app/lib/config/portfolio";
+
+const { profile, geo, openGraph, skills } = portfolio;
 
 export const size = {
   width: 1200,
@@ -75,66 +78,66 @@ export default function HomeOpenGraphImage() {
               letterSpacing: 2,
               textTransform: "uppercase",
             }}
-          >
-            Portfolio
+            >
+              Portfolio
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "12px 18px",
+                borderRadius: 999,
+                border: "1px solid rgba(255,255,255,0.12)",
+                background: "rgba(255,255,255,0.04)",
+                color: "rgba(255,255,255,0.72)",
+                fontSize: 18,
+                letterSpacing: 1.5,
+                textTransform: "uppercase",
+              }}
+            >
+              {profile.role}
+            </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "12px 18px",
-              borderRadius: 999,
-              border: "1px solid rgba(255,255,255,0.12)",
-              background: "rgba(255,255,255,0.04)",
-              color: "rgba(255,255,255,0.72)",
-              fontSize: 18,
-              letterSpacing: 1.5,
-              textTransform: "uppercase",
-            }}
-          >
-            Frontend Developer
-          </div>
-        </div>
 
-        <div
-          style={{ display: "flex", flexDirection: "column", maxWidth: 900 }}
-        >
           <div
-            style={{
-              fontSize: 24,
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.58)",
-            }}
+            style={{ display: "flex", flexDirection: "column", maxWidth: 900 }}
           >
-            John Doe
+            <div
+              style={{
+                fontSize: 24,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.58)",
+              }}
+            >
+              {profile.name}
+            </div>
+            <div
+              style={{
+                marginTop: 18,
+                fontSize: 86,
+                lineHeight: 0.94,
+                fontWeight: 700,
+                letterSpacing: -3,
+              }}
+            >
+              {profile.role}
+            </div>
+            <div
+              style={{
+                marginTop: 20,
+                fontSize: 30,
+                lineHeight: 1.35,
+                color: "rgba(255,255,255,0.78)",
+              }}
+            >
+              {openGraph.home.description}
+            </div>
           </div>
-          <div
-            style={{
-              marginTop: 18,
-              fontSize: 86,
-              lineHeight: 0.94,
-              fontWeight: 700,
-              letterSpacing: -3,
-            }}
-          >
-            Frontend Developer
-          </div>
-          <div
-            style={{
-              marginTop: 20,
-              fontSize: 30,
-              lineHeight: 1.35,
-              color: "rgba(255,255,255,0.78)",
-            }}
-          >
-            React, Next.js, TypeScript, and modern web applications from
-            Springfield, USA.
-          </div>
-        </div>
 
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {["React", "Next.js", "TypeScript", "Springfield, USA"].map((item) => (
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            {[...Object.values(skills).flat(), `${geo.city}, ${geo.country}`].map(
+              (item) => (
             <div
               key={item}
               style={{

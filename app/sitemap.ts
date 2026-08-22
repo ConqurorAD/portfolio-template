@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import portfolio from "@/app/lib/config/portfolio";
 
-const BASE_URL = "https://www.example.com";
+const BASE_URL = portfolio.url;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

@@ -1,16 +1,19 @@
 import Hero from "@/app/components/sections/Hero";
 import HomeSections from "@/app/components/sections/HomeSections";
-import { SOCIAL_LINKS } from "@/app/lib/constants/social";
 import { Metadata } from "next";
+import portfolio from "@/app/lib/config/portfolio";
 
-const siteUrl = "https://www.example.com";
-const personId = `${siteUrl}/#person`;
-const websiteId = `${siteUrl}/#website`;
-const profilePageId = `${siteUrl}/#profile-page`;
+const { profile, geo, seo, url, socials, skills } = portfolio;
 
-const personSameAs = SOCIAL_LINKS.filter((link) =>
-  link.href.startsWith("https://"),
-).map((link) => link.href);
+const personId = `${url}/#person`;
+const websiteId = `${url}/#website`;
+const profilePageId = `${url}/#profile-page`;
+
+const personSameAs = socials
+  .filter((link) => link.href.startsWith("https://"))
+  .map((link) => link.href);
+
+const knowsAbout = Object.values(skills).flat();
 
 const homeStructuredData = {
   "@context": "https://schema.org",
@@ -18,33 +21,25 @@ const homeStructuredData = {
     {
       "@type": "Person",
       "@id": personId,
-      name: "John Doe",
-      jobTitle: "Frontend Developer",
-      description:
-        "Frontend developer in Springfield, USA building fast, accessible web applications with React, Next.js, and TypeScript.",
-      url: siteUrl,
-      image: `${siteUrl}/picofme.png`,
+      name: profile.name,
+      jobTitle: profile.role,
+      description: seo.description,
+      url,
+      image: `${url}${seo.image}`,
       sameAs: personSameAs,
-      knowsAbout: [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Web Development",
-        "UI Engineering",
-      ],
+      knowsAbout,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Springfield",
-        addressCountry: "US",
+        addressLocality: geo.city,
+        addressCountry: geo.countryCode,
       },
     },
     {
       "@type": "ProfilePage",
       "@id": profilePageId,
-      name: "John Doe | Frontend Developer in Springfield, USA",
-      url: siteUrl,
-      description:
-        "Portfolio profile for John Doe, a frontend developer in Springfield, USA.",
+      name: seo.title,
+      url,
+      description: `Portfolio profile for ${profile.name}, a ${profile.role} in ${profile.location}.`,
       mainEntity: { "@id": personId },
       about: { "@id": personId },
       inLanguage: "en",
@@ -52,10 +47,9 @@ const homeStructuredData = {
     {
       "@type": "WebSite",
       "@id": websiteId,
-      name: "John Doe Portfolio",
-      url: siteUrl,
-      description:
-        "John Doe's portfolio of frontend work, projects, and contact details.",
+      name: seo.applicationName,
+      url,
+      description: `${profile.name}'s portfolio of frontend work, projects, and contact details.`,
       publisher: { "@id": personId },
       inLanguage: "en",
     },
@@ -63,9 +57,8 @@ const homeStructuredData = {
 };
 
 export const metadata: Metadata = {
-  title: "John Doe | Frontend Developer in Springfield, USA",
-  description:
-    "John Doe is a frontend developer in Springfield, USA, building fast, accessible web applications with React, Next.js, and TypeScript.",
+  title: seo.title,
+  description: seo.description,
   alternates: {
     canonical: "/",
   },

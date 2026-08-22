@@ -9,6 +9,9 @@ import Footer from "@/app/components/layout/Footer";
 import MouseGlow from "@/app/components/layout/MouseGlow";
 import ProgressBar from "@/app/components/ui/ProgressBar";
 import { cn } from "@/app/lib/utils/cn";
+import portfolio from "@/app/lib/config/portfolio";
+
+const { seo, url } = portfolio;
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -24,39 +27,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.example.com"),
+  metadataBase: new URL(url),
 
   title: {
-    default: "John Doe | Frontend Developer in Springfield, USA",
-    template: "%s | John Doe",
+    default: seo.title,
+    template: seo.titleTemplate,
   },
 
-  description:
-    "John Doe is a frontend developer in Springfield, USA, building fast, accessible web applications with React, Next.js, and TypeScript. Explore his portfolio of projects, skills, and experience.",
+  description: seo.description,
 
-  applicationName: "John Doe Portfolio",
-  authors: [{ name: "John Doe", url: "https://www.example.com" }],
-  creator: "John Doe",
-  publisher: "John Doe",
+  applicationName: seo.applicationName,
+  authors: [{ name: portfolio.profile.name, url }],
+  creator: portfolio.profile.name,
+  publisher: portfolio.profile.name,
   category: "technology",
   referrer: "origin-when-cross-origin",
 
-  keywords: [
-    "John Doe",
-    "frontend developer",
-    "frontend developer Springfield",
-    "frontend developer USA",
-    "React developer",
-    "Next.js developer",
-    "TypeScript developer",
-    "frontend engineer",
-    "web developer USA",
-    "React.js developer USA",
-    "Next.js developer USA",
-  ],
+  keywords: seo.keywords,
 
   verification: {
-    google: process.env.GOOGLE_VERIFICATION,
+    google: seo.googleVerification,
   },
 
   alternates: {
@@ -78,27 +68,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.example.com",
-    title: "John Doe | Frontend Developer in Springfield, USA",
-    description:
-      "John Doe is a frontend developer in Springfield, USA, building fast, accessible web applications with React, Next.js, and TypeScript.",
-    siteName: "John Doe Portfolio",
+    url,
+    title: seo.title,
+    description: seo.description,
+    siteName: seo.applicationName,
     images: [
       {
-        url: "https://www.example.com/opengraph-image",
+        url: `${url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "John Doe - Frontend Developer in Springfield, USA",
+        alt: `${portfolio.profile.name} - ${portfolio.profile.role} in ${portfolio.profile.location}`,
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "John Doe | Frontend Developer in Springfield, USA",
-    description:
-      "John Doe is a frontend developer in Springfield, USA, building fast, accessible web applications with React, Next.js, and TypeScript.",
-    images: ["https://www.example.com/opengraph-image"],
+    title: seo.title,
+    description: seo.description,
+    images: [`${url}/opengraph-image`],
   },
 };
 
@@ -131,7 +119,7 @@ export default function RootLayout({
         <Script
           defer
           src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.UMAMI_ID ?? ""}
+          data-website-id={portfolio.analytics?.umamiId ?? ""}
         />
       </body>
     </html>

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import portfolio from "@/app/lib/config/portfolio";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://www.example.com/sitemap.xml",
-    host: "https://www.example.com",
+    sitemap: `${portfolio.url}/sitemap.xml`,
+    host: portfolio.url,
   };
 }
