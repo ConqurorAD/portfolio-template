@@ -16,14 +16,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/beckkon`,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/projects`,
-      changeFrequency: "weekly",
-      priority: 0.95,
+      changeFrequency: "monthly",
+      priority: 0.85,
     },
     {
       url: `${BASE_URL}/contact`,
-      changeFrequency: "monthly",
-      priority: 0.85,
+      changeFrequency: "yearly",
+      priority: 0.7,
     },
   ];
 }

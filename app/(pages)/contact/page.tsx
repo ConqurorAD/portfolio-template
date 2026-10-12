@@ -1,267 +1,132 @@
-"use client";
-
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Calendar,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
-
-import OptimizedImage from "@/app/components/ui/OptimizedImage";
+import Reveal from "@/app/components/ui/Reveal";
 import { Icon } from "@/app/lib/icons";
 import portfolio from "@/app/lib/config/portfolio";
 
-export default function Contact() {
-  const { geo, contact, contactPage, profile, images } = portfolio;
+export default function ContactPage() {
+  const { contactPage, contact, geo, socials, profile, beckkon } = portfolio;
 
   return (
-    <section id="contact" className="relative px-4 py-16 sm:px-6 lg:py-20">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:80px_80px] opacity-30 [mask-image:radial-gradient(ellipse_75%_45%_at_50%_0%,black,transparent)]"
-      />
-
-      <div className="mx-auto max-w-7xl space-y-10">
-        <header className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div className="max-w-3xl space-y-5">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="section-kicker"
-            >
-              <span>{contactPage.kicker}</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-[clamp(3rem,9vw,6.5rem)] font-semibold leading-[0.92] tracking-tight text-white"
-            >
-              {contactPage.heading.map((line) => (
-                <span
-                  key={line.text}
-                  className={`block ${line.gradient ? "text-gradient" : ""}`}
-                >
-                  {line.text}
-                </span>
-              ))}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="max-w-2xl text-pretty text-base leading-7 text-white/72 sm:text-lg"
-            >
-              {contactPage.intro.split("\n").map((line, index, arr) => (
-                <span key={line}>
-                  {line}
-                  {index < arr.length - 1 && <br />}
-                </span>
-              ))}
-            </motion.p>
+    <div className="shell py-14 sm:py-20">
+      <header className="max-w-3xl">
+        <Reveal>
+          <p className="eyebrow">{contactPage.kicker}</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="display-xl mt-5 text-[clamp(2.2rem,5.5vw,4rem)] text-ink">
+            {contactPage.heading.map((line) => (
+              <span
+                key={line.text}
+                className={line.accent ? "block text-emerald" : "block"}
+              >
+                {line.text}
+              </span>
+            ))}
+          </h1>
+        </Reveal>
+        <Reveal delay={160}>
+          <div className="mt-7 space-y-4 text-lg leading-8 text-ink-soft">
+            {contactPage.intro.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </div>
+        </Reveal>
+      </header>
 
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="relative min-h-96 overflow-hidden rounded-4xl border border-white/10 bg-black/20 sm:min-h-[28rem] lg:min-h-[32rem]"
-          >
-            <OptimizedImage
-              src={images.contact}
-              alt={`${profile.name} portrait`}
-              fill
-              priority
-              className="absolute inset-0 z-0 object-cover object-[50%_18%]"
-            />
-
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(5,5,5,0.08)_0%,rgba(5,5,5,0.18)_36%,rgba(5,5,5,0.7)_100%)]"
-            />
-
-            <div className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="rounded-full border border-white/10 bg-black/70 px-3 py-1.5 text-xs uppercase tracking-[0.24em] text-white/70 sm:bg-black/35 sm:backdrop-blur-md">
-                  {contactPage.imageBadge}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </header>
-
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="section-shell p-6 sm:p-8"
-            >
-              <div className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
-                <div className="space-y-3">
-                  <h2 className="inline-flex items-center gap-2.5 text-2xl font-semibold text-white sm:text-3xl">
-                    <Mail className="h-5 w-5 text-brand-primary" />
-                    {contactPage.emailCardTitle}
-                  </h2>
-                  <p className="max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
-                    {contactPage.emailCardText}
-                  </p>
-                </div>
-
-                <div className="group relative isolate flex max-w-full items-center gap-2.5 overflow-hidden rounded-full border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-white/90 sm:shrink-0">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 -z-10 translate-x-[-110%] bg-[linear-gradient(100deg,transparent,rgba(255,255,255,0.14),transparent)] transition-transform duration-700 group-hover:translate-x-[110%]"
-                  />
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-55" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
-                  </span>
-                  <span className="leading-5">{contactPage.responseTime}</span>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="inline-flex max-w-full items-center gap-2 break-all rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
-                >
-                  {contact.email}
-                  <Mail className="h-4 w-4" />
-                </a>
-
-                {contact.showPhone && contact.phone && (
-                  <a
-                    href={`tel:${contact.phone}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.06]"
-                  >
-                    <Phone className="h-4 w-4 text-brand-signal" />
-                    Quick call
-                  </a>
-                )}
-              </div>
-            </motion.div>
-
-            <div className="grid gap-6 sm:grid-cols-2">
-              <InfoCard
-                icon={<MapPin className="h-5 w-5 text-brand-primary" />}
-                title="Based in"
-                body={contactPage.basedInBody}
-                footer={`${geo.city}, ${geo.country}`}
-              />
-              <InfoCard
-                icon={<Calendar className="h-5 w-5 text-brand-signal" />}
-                title="Timezone"
-                body={contactPage.timezoneBody}
-                footer={geo.timezone ?? ""}
-              />
-            </div>
+      <div className="mt-16 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-2">
+        {/* Email */}
+        <Reveal className="h-full">
+          <div className="flex h-full flex-col bg-paper p-7 sm:p-10">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-emerald-soft text-emerald">
+              <Icon name="Mail" className="h-5 w-5" />
+            </span>
+            <h2 className="mt-6 text-lg font-semibold tracking-tight text-ink">
+              {contactPage.emailTitle}
+            </h2>
+            <p className="mt-3 max-w-md text-sm leading-7 text-ink-soft">
+              {contactPage.emailBody}
+            </p>
+            {contact.email && (
+              <a
+                href={`mailto:${contact.email}`}
+                className="mt-6 inline-flex w-fit max-w-full items-center gap-2 break-all rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-emerald-deep"
+              >
+                {contact.email}
+                <Icon name="ArrowUpRight" className="h-4 w-4" />
+              </a>
+            )}
           </div>
+        </Reveal>
 
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="section-shell p-6 sm:p-8"
+        {/* Beckkon */}
+        <Reveal delay={80} className="h-full">
+          <div className="flex h-full flex-col bg-paper p-7 sm:p-10">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-emerald-soft text-emerald">
+              <Icon name="CircuitBoard" className="h-5 w-5" />
+            </span>
+            <h2 className="mt-6 text-lg font-semibold tracking-tight text-ink">
+              {contactPage.beckkonTitle}
+            </h2>
+            <p className="mt-3 max-w-md text-sm leading-7 text-ink-soft">
+              {contactPage.beckkonBody}
+            </p>
+            <a
+              href={beckkon.linkHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-line-strong px-5 py-3 text-sm font-medium text-ink transition-colors hover:border-ink"
             >
-              <h2 className="text-2xl font-semibold text-white">
-                {contactPage.takeActionTitle}
-              </h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-white/72">
-                {contactPage.takeActionText}
-              </p>
-
-              <div className="mt-6 space-y-3">
-                {contactPage.actions.map((action) => {
-                  return (
-                    <ActionLink
-                      key={action.title}
-                      href={action.href}
-                      icon={<Icon name={action.icon} className="h-5 w-5 text-brand-primary" />}
-                      title={action.title}
-                      body={action.body}
-                      external
-                    />
-                  );
-                })}
-              </div>
-            </motion.div>
+              {beckkon.linkLabel}
+              <Icon name="ArrowUpRight" className="h-4 w-4" />
+            </a>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function InfoCard({
-  icon,
-  title,
-  body,
-  footer,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-  footer: string;
-}) {
-  return (
-    <div className="section-shell p-5">
-      <div className="flex items-center gap-3">
-        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
-          {icon}
-        </div>
-        <div>
-          <h3 className="text-base font-semibold text-white">{title}</h3>
-          <p className="mt-1 text-sm leading-6 text-white/68">{body}</p>
-        </div>
+        </Reveal>
       </div>
 
-      <p className="mt-5 text-sm uppercase tracking-[0.24em] text-white/45">
-        {footer}
-      </p>
+      <div className="mt-6 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
+        {/* Socials */}
+        <Reveal className="h-full">
+          <div className="h-full bg-paper p-7 sm:p-8">
+            <p className="text-[0.68rem] uppercase tracking-[0.24em] text-muted">
+              {contactPage.socialsTitle}
+            </p>
+            <ul className="mt-5 grid grid-cols-2 gap-3">
+              {socials.map((social) => {
+                const external = social.href.startsWith("http");
+                return (
+                  <li key={social.name}>
+                    <a
+                      href={social.href}
+                      {...(external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className="flex items-center gap-2.5 border border-line px-4 py-3 text-sm text-ink-soft transition-colors hover:border-line-strong hover:bg-paper-soft"
+                    >
+                      <Icon name={social.icon} className="h-4 w-4 text-emerald" />
+                      {social.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </Reveal>
+
+        {/* Location */}
+        <Reveal delay={80} className="h-full">
+          <div className="h-full bg-paper p-7 sm:p-8">
+            <p className="text-[0.68rem] uppercase tracking-[0.24em] text-muted">
+              {contactPage.locationTitle}
+            </p>
+            <p className="mt-5 flex items-center gap-2.5 text-base font-medium text-ink">
+              <Icon name="MapPin" className="h-5 w-5 text-emerald" />
+              {geo.city}, {geo.country}
+            </p>
+            <p className="mt-4 text-sm leading-7 text-ink-soft">
+              {profile.availability}
+            </p>
+          </div>
+        </Reveal>
+      </div>
     </div>
-  );
-}
-
-function ActionLink({
-  href,
-  icon,
-  title,
-  body,
-  external = false,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-  external?: boolean;
-}) {
-  return (
-    <a
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-      className="group flex items-center justify-between gap-4 rounded-2xl bg-white/[0.04] p-4 transition-colors hover:bg-white/[0.075]"
-    >
-      <div className="flex min-w-0 gap-3">
-        <div className="rounded-xl bg-white/[0.06] p-3">{icon}</div>
-        <div className="min-w-0">
-          <h3 className="text-base font-semibold text-white">{title}</h3>
-          <p className="mt-1 text-sm leading-6 text-white/68">{body}</p>
-        </div>
-      </div>
-
-      <ArrowUpRight className="h-5 w-5 shrink-0 text-white/45 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
-    </a>
   );
 }

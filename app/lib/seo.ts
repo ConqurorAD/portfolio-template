@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import portfolio from "@/app/lib/config/portfolio";
 
-type PageKey = "about" | "projects" | "contact";
+export type PageKey = "about" | "beckkon" | "projects" | "contact";
 
 export function pageMetadata(page: PageKey): Metadata {
   const { seo, openGraph, profile } = portfolio;
   const og = openGraph[page];
-  const title = og.subtitle ?? page;
+  const title = og.subtitle;
   const description = og.description;
   const canonical = `/${page}`;
 

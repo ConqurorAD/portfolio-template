@@ -1,31 +1,26 @@
 import { IconName } from "@/app/lib/icons";
 
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  longDescription: string;
-  role: string;
-  image: string;
-  tags: string[];
-  liveUrl?: string | null;
-  githubUrl?: string | null;
-  featured: boolean;
+export interface HeadingLine {
+  text: string;
+  accent?: boolean;
 }
 
-export interface Skill {
-  name: string;
-  category: string;
-  icon?: string;
-  proficiency?: number;
+export interface CtaItem {
+  label: string;
+  href: string;
+  icon: IconName;
+  external?: boolean;
 }
 
-export interface Experience {
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  current?: boolean;
+export interface FactItem {
+  label: string;
+  value: string;
+}
+
+export interface NavItem {
+  label: string;
+  href: string;
+  icon: IconName;
 }
 
 export interface SocialLink {
@@ -40,66 +35,25 @@ export interface GeoConfig {
   country: string;
   countryCode?: string;
   timezone?: string;
-  flag?: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
 }
 
 export interface ProfileConfig {
   name: string;
   role: string;
-  tagline?: string;
-  image: string;
-  availability?: string;
+  organisation: string;
+  tagline: string;
   location: string;
+  availability?: string;
+  image?: string;
+}
+
+export interface ImagesConfig {
+  portrait: string;
+  fallback?: string;
 }
 
 export interface ContactConfig {
-  email: string;
-  phone?: string;
-  showPhone?: boolean;
-}
-
-export interface HeroStat {
-  value: string;
-  label: string;
-}
-
-export interface Principle {
-  icon: IconName;
-  title: string;
-  body: string;
-}
-
-export interface StatusConfig {
-  label: string;
-  note?: string;
-}
-
-export interface EducationItem {
-  title: string;
-  school: string;
-  info?: string;
-  current?: boolean;
-}
-
-export interface NavItem {
-  label: string;
-  href: string;
-  icon: IconName;
-}
-
-export interface CtaItem {
-  label: string;
-  href: string;
-  icon: IconName;
-}
-
-export interface FooterLink {
-  label: string;
-  href: string;
+  email?: string;
 }
 
 export interface SeoConfig {
@@ -108,79 +62,54 @@ export interface SeoConfig {
   description: string;
   applicationName?: string;
   keywords?: string[];
-  sameAs?: string[];
   googleVerification?: string;
   image?: string;
 }
 
-export interface OpenGraphCopy {
-  role?: string;
-  subtitle?: string;
+export interface ProjectLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  summary: string;
   description: string;
+  role: string;
+  focus: string[];
+  status?: string;
+  links?: ProjectLink[];
+  featured: boolean;
 }
 
-export interface HeadingLine {
-  text: string;
-  gradient?: boolean;
-}
-
-export interface SectionsConfig {
-  about: boolean;
-  projects: boolean;
-  contact: boolean;
-  showExperience: boolean;
-  showEducation: boolean;
-  showSkills: boolean;
-  showPrinciples: boolean;
-  showAvailability: boolean;
-  showHeroStats: boolean;
-  projectLabels: {
-    live: string;
-    source: string;
-  };
-}
-
-export interface ImagesConfig {
-  hero: string;
-  about: string;
-  contact: string;
-  seoFallback: string;
-}
-
-export interface ProjectsPageConfig {
-  kicker: string;
-  heading: HeadingLine[];
-  description: string;
-  indexCard: {
-    title: string;
-    countLabel: string;
-    focusLabel: string;
-    focusValue: string;
-    toolsLabel: string;
-    toolsValue: string;
-    footer: string;
-  };
-  moreText: string;
-  moreCtaLabel: string;
-}
-
-export interface AboutPageConfig {
-  profileBadge: string;
-  introductionTitle: string;
-  experienceTitle: string;
-  educationTitle: string;
-  skillsTitle: string;
-}
-
-export interface ContactAction {
-  key?: "github" | "linkedin" | "instagram" | string;
+export interface Capability {
+  icon: IconName;
   title: string;
   body: string;
-  href: string;
-  icon: IconName;
+  items: string[];
 }
 
-export type { IconName } from "@/app/lib/icons";
+export interface TimelineItem {
+  period: string;
+  title: string;
+  org: string;
+  description: string;
+  current?: boolean;
+}
+
+export interface SystemStage {
+  step: string;
+  title: string;
+  body: string;
+}
+
+export interface BeckkonProduct {
+  title: string;
+  body: string;
+}
 
 export interface PortfolioConfig {
   url: string;
@@ -193,58 +122,111 @@ export interface PortfolioConfig {
   };
   contact: ContactConfig;
   socials: SocialLink[];
+  navigation: NavItem[];
+
   hero: {
     kicker: string;
     heading: HeadingLine[];
+    intro: string;
     primaryCta: CtaItem;
     secondaryCta: CtaItem;
+    facts: FactItem[];
   };
-  heroStats: HeroStat[];
-  principles: Principle[];
+
   home: {
-    principlesKicker: string;
-    principlesTitle: string;
-    principlesDescription: string;
+    aboutKicker: string;
+    aboutTitle: string;
+    aboutBody: string[];
+    aboutCta: CtaItem;
     workKicker: string;
     workTitle: string;
     workDescription: string;
-    aboutCta: CtaItem;
     projectsCta: CtaItem;
+    capabilitiesKicker: string;
+    capabilitiesTitle: string;
+    capabilitiesDescription: string;
+    journeyKicker: string;
+    journeyTitle: string;
+    ctaTitle: string;
+    ctaBody: string;
   };
-  status: StatusConfig;
-  navigation: NavItem[];
-  footer: {
-    description: string;
-    nav: FooterLink[];
-    shareTitle: string;
-    copyright: string;
-  };
-  projects: Project[];
-  projectsPage: ProjectsPageConfig;
-  aboutPage: AboutPageConfig;
-  contactPage: {
+
+  aboutPage: {
     kicker: string;
     heading: HeadingLine[];
     intro: string;
-    imageBadge: string;
-    emailCardTitle: string;
-    emailCardText: string;
-    responseTime: string;
-    basedInBody: string;
-    timezoneBody: string;
-    takeActionTitle: string;
-    takeActionText: string;
-    actions: ContactAction[];
+    interestsTitle: string;
+    interests: string[];
+    focusTitle: string;
+    focusBody: string;
   };
+
+  beckkon: {
+    kicker: string;
+    name: string;
+    tagline: string;
+    summary: string;
+    description: string[];
+    roleTitle: string;
+    roleBody: string;
+    linkLabel: string;
+    linkHref: string;
+    stagesTitle: string;
+    stagesDescription: string;
+    stages: SystemStage[];
+    capabilitiesTitle: string;
+    capabilitiesDescription: string;
+    products: BeckkonProduct[];
+    note: string;
+  };
+
+  projectsPage: {
+    kicker: string;
+    heading: HeadingLine[];
+    description: string;
+    note: string;
+  };
+
+  projects: Project[];
+
+  capabilities: {
+    kicker: string;
+    heading: HeadingLine[];
+    description: string;
+    items: Capability[];
+  };
+
+  journey: {
+    kicker: string;
+    heading: HeadingLine[];
+    description: string;
+    items: TimelineItem[];
+  };
+
+  contactPage: {
+    kicker: string;
+    heading: HeadingLine[];
+    intro: string[];
+    emailTitle: string;
+    emailBody: string;
+    beckkonTitle: string;
+    beckkonBody: string;
+    socialsTitle: string;
+    locationTitle: string;
+  };
+
+  footer: {
+    description: string;
+    copyright: string;
+  };
+
   openGraph: {
-    home: OpenGraphCopy;
-    about: OpenGraphCopy;
-    projects: OpenGraphCopy;
-    contact: OpenGraphCopy;
+    home: { role: string; description: string };
+    about: { subtitle: string; description: string };
+    beckkon: { subtitle: string; description: string };
+    projects: { subtitle: string; description: string };
+    contact: { subtitle: string; description: string };
   };
-  sections: SectionsConfig;
-  introduction: string;
-  workExperience: Experience[];
-  education: EducationItem[];
-  skills: Record<string, string[]>;
 }
+
+export type { IconName } from "@/app/lib/icons";

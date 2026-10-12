@@ -1,60 +1,62 @@
 import type { PortfolioConfig } from "@/app/types";
 
+// ---------------------------------------------------------------------------
+// SINGLE SOURCE OF TRUTH
+//
+// Everything on the site (copy, metadata, sitemap, OG images) is driven by this
+// file. Items marked with "TODO(personal)" are intentionally left as neutral
+// placeholders because a verified value has not been provided yet. Replace them
+// with real links before going live — never ship invented handles or numbers.
+// ---------------------------------------------------------------------------
+
 const portfolio: PortfolioConfig = {
-  url: "https://www.example.com",
+  // TODO(personal): replace with the real production domain before launch.
+  // This drives metadataBase, canonical URLs, sitemap.xml and robots.txt.
+  url: "https://example.com",
 
   profile: {
-    name: "John Doe",
-    role: "Frontend Developer",
-    tagline: "Building fast, thoughtful digital experiences.",
+    name: "Aditya Verma",
+    role: "Co-founder & Chief Product Officer",
+    organisation: "Beckkon Systems Pvt. Ltd.",
+    tagline: "Building ideas into real-world systems.",
+    location: "Varanasi, India",
+    availability:
+      "Open to conversations with founders, operators, investors and collaborators.",
     image: "/about.png",
-    availability: "Open for frontend and product work",
-    location: "Springfield, USA",
   },
 
   geo: {
-    city: "Springfield",
-    country: "United States",
-    countryCode: "US",
-    timezone: "America/Chicago",
-    flag: "🇺🇸",
-    coordinates: {
-      lat: 39.7817,
-      lng: -89.6501,
-    },
+    city: "Varanasi",
+    country: "India",
+    countryCode: "IN",
+    timezone: "Asia/Kolkata",
   },
 
   images: {
-    hero: "/heroimage.png",
-    about: "/about.png",
-    contact: "/imagecp.png",
-    seoFallback: "/picofme.png",
+    // TODO(personal): swap in an authentic portrait at this path when available.
+    portrait: "/about.png",
+    fallback: "/picofme.png",
   },
 
   seo: {
-    title: "John Doe | Frontend Developer in Springfield, USA",
-    titleTemplate: "%s | John Doe",
+    title: "Aditya Verma — Co-founder & CPO at Beckkon Systems",
+    titleTemplate: "%s | Aditya Verma",
     description:
-      "John Doe is a frontend developer in Springfield, USA, building fast, accessible web applications with React, Next.js, and TypeScript. Explore his portfolio of projects, skills, and experience.",
-    applicationName: "John Doe Portfolio",
+      "Aditya Verma is an Engineering Physics student at IIT (BHU), Varanasi, and co-founder and Chief Product Officer of Beckkon Systems, an IIT (BHU)-incubated startup building connected technology for school safety and student tracking.",
+    applicationName: "Aditya Verma",
     keywords: [
-      "John Doe",
-      "frontend developer",
-      "frontend developer Springfield",
-      "frontend developer USA",
-      "React developer",
-      "Next.js developer",
-      "TypeScript developer",
-      "frontend engineer",
-      "web developer USA",
-      "React.js developer USA",
-      "Next.js developer USA",
-    ],
-    sameAs: [
-      "https://github.com/johndoe",
-      "https://www.linkedin.com/in/johndoe/",
-      "https://facebook.com/johndoe",
-      "https://instagram.com/johndoe",
+      "Aditya Verma",
+      "Aditya Verma IIT BHU",
+      "Aditya Verma Beckkon",
+      "Beckkon Systems",
+      "Engineering Physics IIT BHU",
+      "student safety startup",
+      "IoT founder",
+      "LoRaWAN",
+      "BLE",
+      "embedded systems",
+      "product management",
+      "hardware startup India",
     ],
     googleVerification: process.env.GOOGLE_VERIFICATION,
     image: "/picofme.png",
@@ -65,339 +67,363 @@ const portfolio: PortfolioConfig = {
   },
 
   contact: {
-    email: "hello@johndoe.dev",
-    phone: "+1-555-0100",
-    showPhone: true,
+    // TODO(personal): replace with Aditya's verified email address.
+    email: "hello@example.com",
   },
 
+  // TODO(personal): replace the placeholder hrefs below with Aditya's real
+  // profiles. They are kept deliberately generic so nothing is fabricated.
   socials: [
     {
-      name: "GitHub",
-      href: "https://github.com/johndoe",
-      icon: "Github",
-      tooltip: "Where I store my bugs... ",
-    },
-    {
       name: "LinkedIn",
-      href: "https://www.linkedin.com/in/johndoe/",
+      href: "https://www.linkedin.com/",
       icon: "Linkedin",
-      tooltip: "Professional me (I promise I'm fun) ",
+      tooltip: "Professional profile",
     },
     {
-      name: "Facebook",
-      href: "https://facebook.com/johndoe",
-      icon: "Facebook",
-      tooltip: "Daily dose of nostalgia & drama ",
+      name: "GitHub",
+      href: "https://github.com/",
+      icon: "Github",
+      tooltip: "Code and experiments",
     },
     {
-      name: "Instagram",
-      href: "https://instagram.com/johndoe",
-      icon: "Instagram",
-      tooltip: "Reels, vibes & fake perfection ",
+      name: "X",
+      href: "https://x.com/",
+      icon: "Twitter",
+      tooltip: "Notes and updates",
     },
     {
       name: "Email",
-      href: "mailto:hello@johndoe.dev",
+      href: "mailto:hello@example.com",
       icon: "Mail",
-      tooltip: "Let's build something cool together ",
-    },
-  ],
-
-  hero: {
-    kicker: "John Doe · Frontend Developer",
-    heading: [
-      { text: "Building fast," },
-      { text: "thoughtful digital" },
-      { text: "experiences.", gradient: true },
-    ],
-    primaryCta: { label: "View projects", href: "/projects", icon: "ArrowRight" },
-    secondaryCta: { label: "About John", href: "/about", icon: "ChevronRight" },
-  },
-
-  heroStats: [
-    { value: "4", label: "Projects in portfolio" },
-    { value: "React · Next.js", label: "Core stack" },
-    { value: "Springfield, USA", label: "Based in" },
-  ],
-
-  principles: [
-    {
-      icon: "Layers3",
-      title: "Make it make sense",
-      body: "Good interfaces shouldn't need explaining. If it feels obvious, the job is probably done.",
+      tooltip: "Start a conversation",
     },
     {
-      icon: "Code2",
-      title: "Pretty, but functional",
-      body: "Because a beautiful interface that breaks the moment someone touches it is just expensive decoration.",
-    },
-    {
-      icon: "Wand2",
-      title: "Just enough magic",
-      body: "Thoughtful motion, tiny details, and interactions that make people think, “okay, that’s nice.”",
+      name: "Beckkon",
+      href: "https://beckkon.com",
+      icon: "ExternalLink",
+      tooltip: "Beckkon Systems website",
     },
   ],
-
-  home: {
-    principlesKicker: "Rules I Made Up",
-    principlesTitle: "How I Do Things",
-    principlesDescription:
-      "A clear, practical approach to frontend work, product structure, and motion.",
-    workKicker: "Things I Made",
-    workTitle: "What I’ve Been Cooking",
-    workDescription:
-      "A selection of React and Next.js projects focused on thoughtful design and solid frontend experiences.",
-    aboutCta: { label: "Learn more about John", href: "/about", icon: "ArrowRight" },
-    projectsCta: { label: "View all projects", href: "/projects", icon: "ArrowRight" },
-  },
-
-  status: {
-    label: "Currently building",
-    note: "Probably overthinking a button",
-  },
 
   navigation: [
-    { label: "Home", href: "/", icon: "Home" },
-    { label: "About", href: "/about", icon: "User" },
-    { label: "Work", href: "/projects", icon: "Briefcase" },
+    { label: "Home", href: "/", icon: "Compass" },
+    { label: "About", href: "/about", icon: "Users" },
+    { label: "Beckkon", href: "/beckkon", icon: "CircuitBoard" },
+    { label: "Projects", href: "/projects", icon: "Target" },
     { label: "Contact", href: "/contact", icon: "Mail" },
   ],
 
-  footer: {
-    description:
-      "A personal portfolio for John Doe, a frontend developer from Springfield, USA, focused on React, Next.js, TypeScript, and modern web applications.",
-    nav: [
-      { label: "John’s homepage", href: "/" },
-      { label: "About John", href: "/about" },
-      { label: "Selected projects", href: "/projects" },
-      { label: "Contact John", href: "/contact" },
+  hero: {
+    kicker: "Co-founder & CPO · Beckkon Systems",
+    heading: [
+      { text: "Building ideas into" },
+      { text: "real-world systems.", accent: true },
     ],
-    shareTitle: "John Doe | Frontend Developer",
-    copyright: "John Doe",
+    intro:
+      "I'm Aditya Verma — an Engineering Physics student at IIT (BHU), Varanasi, and co-founder of Beckkon Systems, an IIT (BHU)-incubated startup building connected technology for school safety and student tracking.",
+    primaryCta: { label: "Explore Beckkon", href: "/beckkon", icon: "ArrowRight" },
+    secondaryCta: { label: "About Aditya", href: "/about", icon: "ArrowRight" },
+    facts: [
+      { label: "Studying", value: "Engineering Physics, IIT (BHU) Varanasi" },
+      { label: "Building", value: "Beckkon Systems — connected school safety" },
+      { label: "Working with", value: "IoT, BLE, LoRaWAN & embedded systems" },
+    ],
   },
 
-  projects: [
-    {
-      id: "1",
-      title: "Wordly",
-      description:
-        "A modern slang dictionary built for discovering and understanding internet slang.",
-      longDescription:
-        "Wordly is a community-driven dictionary where users can explore, search, and discover trending slang, meanings, examples, and popular terms through a fast and interactive interface.",
-      role: "Frontend design and development",
-      image: "/projects/slang.png",
-      tags: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
-      liveUrl: "https://example.com/wordly-demo",
-      githubUrl: null,
-      featured: true,
-    },
-    {
-      id: "2",
-      title: "Community Hub",
-      description:
-        "A community website built to organize events, identity, and updates.",
-      longDescription:
-        "Designed and developed a website for a local community with event discovery, club profiles, and reusable content sections for future growth.",
-      role: "Design and frontend development",
-      image: "/projects/projectone.png",
-      tags: ["React"],
-      liveUrl: "https://example.com/community-hub-demo",
-      githubUrl: "https://github.com/johndoe/community-hub",
-      featured: false,
-    },
-    {
-      id: "3",
-      title: "Secure Document Signing Platform",
-      description:
-        "A secure signature workflow with verification and audit trails.",
-      longDescription:
-        "A digital signature platform that enables secure document signing with verification steps, signing flows, and audit-friendly history.",
-      role: "Frontend ",
-      image: "/projects/projecttwo.png",
-      tags: ["React", "Node.js", "MongoDB"],
-      liveUrl: "https://example.com/signflow-demo",
-      githubUrl: "https://github.com/johndoe/signflow",
-      featured: false,
-    },
-    {
-      id: "4",
-      title: "CityPulse",
-      description:
-        "A civic issue reporting platform designed to help citizens report, track, and engage with local community problems.",
-      longDescription:
-        "CityPulse is a location-aware civic platform that makes it easier for citizens to report local issues, track their progress, and stay informed about problems in their community through an interactive and user-friendly interface.",
-      role: "Frontend design and development",
-      image: "/projects/civiceye.png",
-      tags: ["React", "TypeScript", "Maps", "Geolocation"],
-      liveUrl: "https://example.com/citypulse-demo",
-      githubUrl: "https://github.com/johndoe/citypulse-frontend",
-      featured: true,
-    },
-  ],
+  home: {
+    aboutKicker: "About",
+    aboutTitle: "A builder working across hardware, software and business.",
+    aboutBody: [
+      "I study Engineering Physics at IIT (BHU), Varanasi, and spend most of my time building Beckkon Systems — a startup we founded to make schools safer and more connected.",
+      "My work sits at the intersection of physical devices and the software that gives them meaning: designing products, defining how they fit together, and figuring out how they create real value for the people who use them.",
+    ],
+    aboutCta: { label: "More about Aditya", href: "/about", icon: "ArrowRight" },
+    workKicker: "Selected work",
+    workTitle: "Systems I'm building.",
+    workDescription:
+      "Beckkon Systems is the main thread through my work today. Below are the pieces I help design, build and run.",
+    projectsCta: { label: "View all projects", href: "/projects", icon: "ArrowRight" },
+    capabilitiesKicker: "Capabilities",
+    capabilitiesTitle: "What I bring to a build.",
+    capabilitiesDescription:
+      "A focused set of skills shaped by hands-on work on a hardware-and-software startup.",
+    journeyKicker: "Journey",
+    journeyTitle: "Where I'm coming from.",
+    ctaTitle: "Let's build something useful.",
+    ctaBody:
+      "I'm always glad to talk about products, connected hardware, startups and school safety. If any of that overlaps with what you're working on, reach out.",
+  },
+
+  aboutPage: {
+    kicker: "Profile",
+    heading: [
+      { text: "Engineer by training," },
+      { text: "product builder in practice.", accent: true },
+    ],
+    intro:
+      "I'm Aditya Verma, an Engineering Physics student at the Indian Institute of Technology (BHU), Varanasi. Alongside my degree I'm a co-founder and the Chief Product Officer of Beckkon Systems, an IIT (BHU)-incubated startup building technology infrastructure for school safety and student tracking.",
+    interestsTitle: "What I work on",
+    interests: [
+      "IoT, BLE and LoRaWAN connected devices",
+      "Embedded systems and hardware prototyping",
+      "Product strategy, requirements and roadmap",
+      "Business analysis, partnerships and go-to-market",
+      "Turning ambiguous problems into shipped products",
+    ],
+    focusTitle: "How I think about the work",
+    focusBody:
+      "The problems I enjoy most sit where a physical device, a network and a piece of software all have to agree. That usually means learning fast, prototyping early, talking to the people who will actually use the thing, and staying close to the field while the product is still in motion. I care less about looking impressive and more about whether the system holds up in the real world.",
+  },
+
+  beckkon: {
+    kicker: "Case study",
+    name: "Beckkon Systems",
+    tagline: "Connected infrastructure for school safety and student tracking.",
+    summary:
+      "Beckkon Systems is an IIT (BHU)-incubated technology startup building a hardware-and-software system that helps schools know where their students are — from the bus stop to the classroom.",
+    description: [
+      "Beckkon is built around a simple idea: a student's journey to and from school should be visible and safe. The platform pairs a smart ID card carried by each student with the infrastructure around a campus, then turns that into clear information for the people responsible for them.",
+      "As co-founder and Chief Product Officer, I work across the product — shaping what we build, how the hardware and software fit together, and how each piece earns its place in a real school environment. In an early-stage startup that means moving between product definition, prototyping, field conversations and operations.",
+    ],
+    roleTitle: "My role",
+    roleBody:
+      "As Co-founder and Chief Product Officer I lead product definition and strategy: translating school and parent needs into concrete requirements, deciding how the smart ID card, the campus infrastructure and the cloud platform work together, and keeping the roadmap grounded in what can actually be built and deployed. I also work on the business side — research, partnerships and go-to-market — because at this stage the product and the business are the same conversation.",
+    linkLabel: "Visit beckkon.com",
+    linkHref: "https://beckkon.com",
+    stagesTitle: "How the system fits together",
+    stagesDescription:
+      "The platform connects a device a student carries to the software a school and parent use. Each layer has a clear job.",
+    stages: [
+      {
+        step: "01",
+        title: "Smart ID card",
+        body: "A card each student carries that identifies them and acts as the on-person node of the system.",
+      },
+      {
+        step: "02",
+        title: "Campus & vehicle infrastructure",
+        body: "Readers and gateways in buses and around campus detect the card and create a stream of presence events.",
+      },
+      {
+        step: "03",
+        title: "Connectivity layer",
+        body: "The events travel over short-range and long-range wireless links — BLE and LoRaWAN — towards the cloud.",
+      },
+      {
+        step: "04",
+        title: "Cloud platform",
+        body: "The backend turns raw events into attendance, boarding and movement data that other services can use.",
+      },
+      {
+        step: "05",
+        title: "Schools & parents",
+        body: "Administrators monitor the fleet and campus while parents receive the notifications that matter to them.",
+      },
+    ],
+    capabilitiesTitle: "What the platform is designed to do",
+    capabilitiesDescription:
+      "These are the capabilities the product is built around. They ship progressively and depend on how each school is set up.",
+    products: [
+      {
+        title: "Live student tracking",
+        body: "See where students are across the school journey in near real time.",
+      },
+      {
+        title: "Bus monitoring",
+        body: "Follow vehicles and the students on board along their routes.",
+      },
+      {
+        title: "Automated attendance",
+        body: "Record attendance from presence events instead of manual roll calls.",
+      },
+      {
+        title: "Boarding & deboarding alerts",
+        body: "Notify parents when a child boards or leaves a bus.",
+      },
+      {
+        title: "Geofencing & safe zones",
+        body: "Define boundaries and understand when a student is inside or outside them.",
+      },
+      {
+        title: "Campus safety",
+        body: "Give staff a clearer picture of who is on campus and when.",
+      },
+      {
+        title: "SOS",
+        body: "A way for a student to raise an alert when they need help.",
+      },
+      {
+        title: "Admin & parent apps",
+        body: "Purpose-built views for the two groups who rely on the system.",
+      },
+    ],
+    note:
+      "Beckkon Systems is an early-stage startup and capabilities are rolled out school by school. Nothing on this page should be read as a completed deployment or a commercial result.",
+  },
 
   projectsPage: {
     kicker: "Selected work",
     heading: [
-      { text: "Selected projects," },
-      { text: "built to solve" },
-      { text: "real problems.", gradient: true },
+      { text: "Work that connects" },
+      { text: "devices, software and people.", accent: true },
     ],
     description:
-      "A selection of React and Next.js projects spanning e-commerce, community platforms, and modern web applications.",
-    indexCard: {
-      title: "Work index",
-      countLabel: "Selected projects",
-      focusLabel: "Primary focus",
-      focusValue: "Frontend",
-      toolsLabel: "Main tools",
-      toolsValue: "React · Next.js",
-      footer: "From product interfaces to practical web applications.",
-    },
-    moreText:
-      "More experiments, prototypes, and older work live on GitHub.",
-    moreCtaLabel: "Explore more on GitHub",
+      "Most of my current work is part of Beckkon Systems. Rather than list unrelated side projects, this page focuses on the systems I'm actually building.",
+    note:
+      "Project pages are intentionally limited to work that exists today. As more of the platform ships and is documented, this page will grow.",
   },
 
-  aboutPage: {
-    profileBadge: "Profile",
-    introductionTitle: "Introduction",
-    experienceTitle: "Work Experience",
-    educationTitle: "Education",
-    skillsTitle: "Technical Skills",
+  projects: [
+    {
+      id: "smart-id-card",
+      title: "Smart ID Card",
+      category: "Hardware & IoT",
+      summary:
+        "The on-person device at the heart of the Beckkon system — a student card that makes a child identifiable and visible to the surrounding infrastructure.",
+      description:
+        "The smart ID card is the layer everything else depends on. It has to be small, durable and simple enough to live in a school bag, while carrying the identity and presence signals the rest of the platform reads. Designing it means balancing radio range and power, form factor and cost, and how it behaves in the real, messy conditions of a school day.",
+      role: "Product definition and hardware direction",
+      focus: ["Embedded systems", "BLE", "LoRaWAN", "Prototyping"],
+      status: "Core Beckkon product",
+      links: [{ label: "Part of Beckkon Systems", href: "/beckkon" }],
+      featured: true,
+    },
+    {
+      id: "school-safety-platform",
+      title: "School Safety & Tracking Platform",
+      category: "Product & Software",
+      summary:
+        "The cloud platform and applications that turn presence events into tracking, attendance and notifications for schools and parents.",
+      description:
+        "Once devices are reporting, the platform is what makes that data useful. It turns a stream of presence events into attendance records, bus and campus monitoring, geofencing and parent notifications. I work on product definition here — deciding what administrators and parents actually need to see, and how the software should behave when the network or the hardware is imperfect.",
+      role: "Product strategy, requirements and UX direction",
+      focus: ["Product", "Requirements", "UX", "Roadmap"],
+      status: "Core Beckkon product",
+      links: [{ label: "Part of Beckkon Systems", href: "/beckkon" }],
+      featured: true,
+    },
+    {
+      id: "connectivity-layer",
+      title: "Connectivity & Infrastructure Layer",
+      category: "Infrastructure",
+      summary:
+        "The network of gateways and wireless links that connects cards in the field to the cloud platform behind Beckkon.",
+      description:
+        "For a tracking system to be trustworthy, the connection between a student's card and the cloud has to hold up across buses, buildings and distances. This layer combines BLE for short-range detection with LoRaWAN for longer-range, low-power communication, and defines how the resulting events make their way into the platform reliably.",
+      role: "System architecture and product requirements",
+      focus: ["LoRaWAN", "BLE", "Gateways", "Architecture"],
+      status: "Core Beckkon system",
+      links: [{ label: "Part of Beckkon Systems", href: "/beckkon" }],
+      featured: true,
+    },
+  ],
+
+  capabilities: {
+    kicker: "Capabilities",
+    heading: [{ text: "Capabilities shaped by", accent: false }, { text: "real product work.", accent: true }],
+    description:
+      "Everything here comes from building Beckkon — not a checklist of things I'd like to learn.",
+    items: [
+      {
+        icon: "Cpu",
+        title: "Hardware & IoT",
+        body: "Connected-device and embedded work, from board-level decisions to how a device behaves in the field.",
+        items: ["Embedded systems", "BLE", "LoRaWAN", "Sensors & prototyping"],
+      },
+      {
+        icon: "Compass",
+        title: "Product",
+        body: "Turning ambiguous needs into a defined product with a clear roadmap that hardware and software can both build against.",
+        items: ["Product strategy", "Requirements", "UX & flows", "Roadmap"],
+      },
+      {
+        icon: "LineChart",
+        title: "Business",
+        body: "The commercial side of an early startup — research, partnerships and figuring out how a product reaches schools.",
+        items: ["Market research", "Partnerships", "Business analysis", "Go-to-market"],
+      },
+      {
+        icon: "Wrench",
+        title: "Execution",
+        body: "Getting things into the field and keeping them moving when resources are tight and the plan meets reality.",
+        items: ["Prototyping", "Field work", "Coordination", "Operations"],
+      },
+    ],
+  },
+
+  journey: {
+    kicker: "Journey",
+    heading: [{ text: "A short, honest", accent: false }, { text: "timeline.", accent: true }],
+    description:
+      "Two threads run through everything so far: studying how physical systems work, and building one of my own.",
+    items: [
+      {
+        period: "Present",
+        title: "Co-founder & Chief Product Officer",
+        org: "Beckkon Systems Pvt. Ltd. · IIT (BHU) incubated",
+        description:
+          "Leading product for a connected school-safety and student-tracking platform, working across hardware, software, business and field deployment.",
+        current: true,
+      },
+      {
+        period: "Ongoing",
+        title: "Engineering Physics",
+        org: "Indian Institute of Technology (BHU), Varanasi",
+        description:
+          "Studying the physics and engineering fundamentals that sit underneath the connected devices I work with.",
+        current: true,
+      },
+    ],
   },
 
   contactPage: {
-    kicker: "Let’s connect",
-    heading: [
-      { text: "Let’s build" },
-      { text: "something useful", gradient: true },
+    kicker: "Contact",
+    heading: [{ text: "Let's talk about", accent: false }, { text: "something worth building.", accent: true }],
+    intro: [
+      "The fastest way to reach me is email. I'm happy to talk about products, connected hardware, startups and school safety — or anything where hard problems meet real people.",
+      "If you'd like to learn about the company, Beckkon Systems has its own home online.",
     ],
-    intro:
-      "If you need a frontend developer for React, Next.js, or TypeScript work, send me a message.\nI’m open to freelance work, collaborations, and thoughtful product builds.",
-    imageBadge: "You’re Still Here?",
-    emailCardTitle: "Drop me a line",
-    emailCardText:
-      "The fastest way to reach me. I check email throughout the day and usually reply within a few hours.",
-    responseTime: "Response time: faster than her replies",
-    basedInBody: "Working remotely from the beautiful city of lakes.",
-    timezoneBody: "UTC-6. Usually online from 9 AM to 6 PM.",
-    takeActionTitle: "Take action",
-    takeActionText: "Choose the next step that works best for you.",
-    actions: [
-      {
-        title: "View GitHub",
-        body: "Explore repositories and recent code.",
-        href: "https://github.com/johndoe",
-        icon: "Github",
-      },
-      {
-        title: "Connect on LinkedIn",
-        body: "View my professional profile and experience.",
-        href: "https://www.linkedin.com/in/johndoe/",
-        icon: "Linkedin",
-      },
-      {
-        title: "Follow on Instagram",
-        body: "See updates and moments beyond work.",
-        href: "https://instagram.com/johndoe",
-        icon: "Instagram",
-      },
-    ],
+    emailTitle: "Email",
+    emailBody:
+      "Best for detailed conversations, introductions and anything product-related.",
+    beckkonTitle: "Beckkon Systems",
+    beckkonBody:
+      "See what we're building for school safety and student tracking.",
+    socialsTitle: "Elsewhere",
+    locationTitle: "Based in",
+  },
+
+  footer: {
+    description:
+      "Aditya Verma — Engineering Physics student at IIT (BHU), Varanasi, and co-founder and Chief Product Officer at Beckkon Systems.",
+    copyright: "Aditya Verma",
   },
 
   openGraph: {
     home: {
-      role: "Frontend Developer",
+      role: "Co-founder & CPO, Beckkon Systems",
       description:
-        "React, Next.js, TypeScript, and modern web applications from Springfield, USA.",
+        "Engineering Physics at IIT (BHU) and connected technology for school safety.",
     },
     about: {
-      subtitle: "About John",
+      subtitle: "About",
       description:
-        "Frontend developer background, experience, and technical skills.",
+        "Engineering Physics at IIT (BHU), Varanasi, and building Beckkon Systems.",
+    },
+    beckkon: {
+      subtitle: "Beckkon Systems",
+      description:
+        "Connected infrastructure for school safety and student tracking.",
     },
     projects: {
       subtitle: "Projects",
-      description: "Selected React and Next.js work with product context.",
+      description: "The systems I'm building at Beckkon Systems.",
     },
     contact: {
       subtitle: "Contact",
-      description:
-        "Available for frontend work, collaborations, and freelance projects.",
+      description: "Get in touch about products, hardware and startups.",
     },
-  },
-
-  sections: {
-    about: true,
-    projects: true,
-    contact: true,
-    showExperience: true,
-    showEducation: true,
-    showSkills: true,
-    showPrinciples: true,
-    showAvailability: true,
-    showHeroStats: true,
-    projectLabels: {
-      live: "Live demo",
-      source: "Source",
-    },
-  },
-
-  introduction: `
-I’m John Doe, a frontend developer based in Springfield, USA. I specialize in
-building modern web applications with React, Next.js, and TypeScript — from
-marketing sites and community platforms to full e-commerce systems.
-
-My work focuses on interfaces that are fast, responsive, and accessible. I care
-about clear information hierarchy, sensible performance budgets, and code that
-stays easy to maintain as a product grows.
-
-I’m currently working as a frontend developer in Springfield, contributing to
-production React and Next.js applications, and I enjoy turning complex product
-ideas into interfaces that are simple to use and simple to extend.
-`,
-
-  workExperience: [
-    {
-      title: "Frontend Intern",
-      company: "Acme Corp",
-      period: "2026 — May 24, 2026",
-      description:
-        "Contributed to real-world React applications while developing practical experience in reusable UI, responsive design, and team workflows.",
-    },
-    {
-      title: "Frontend Developer",
-      company: "Acme Corp",
-      period: "May 24, 2026 — Present",
-      description:
-        "Building and maintaining production-ready frontend experiences with React, reusable UI systems, and performance-focused improvements.",
-      current: true,
-    },
-  ],
-
-  education: [
-    {
-      title: "BSc Computer Science",
-      school: "State University",
-      info: "Final year",
-      current: true,
-    },
-    {
-      title: "High School Diploma",
-      school: "Springfield High School",
-      info: "GPA: 3.26",
-    },
-    {
-      title: "Middle School",
-      school: "Riverside Secondary School",
-      info: "GPA: 3.90",
-    },
-  ],
-
-  skills: {
-    frontend: ["React", "Next.js", "TypeScript", "Tailwind"],
-    backend: ["Node.js", "Express", "MongoDB"],
-    tools: ["Git", "Figma", "Postman", "Linux"],
   },
 };
 

@@ -1,19 +1,19 @@
+import type { Metadata } from "next";
+
 import Hero from "@/app/components/sections/Hero";
 import HomeSections from "@/app/components/sections/HomeSections";
-import { Metadata } from "next";
 import portfolio from "@/app/lib/config/portfolio";
 
-const { profile, geo, seo, url, socials, skills } = portfolio;
+const { profile, geo, seo, url, socials } = portfolio;
 
 const personId = `${url}/#person`;
 const websiteId = `${url}/#website`;
 const profilePageId = `${url}/#profile-page`;
+const orgId = `${url}/#organisation`;
 
 const personSameAs = socials
-  .filter((link) => link.href.startsWith("https://"))
+  .filter((link) => link.href.startsWith("https://") && !link.href.includes("beckkon"))
   .map((link) => link.href);
-
-const knowsAbout = Object.values(skills).flat();
 
 const homeStructuredData = {
   "@context": "https://schema.org",
@@ -27,7 +27,19 @@ const homeStructuredData = {
       url,
       image: `${url}${seo.image}`,
       sameAs: personSameAs,
-      knowsAbout,
+      worksFor: { "@id": orgId },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Indian Institute of Technology (BHU), Varanasi",
+      },
+      knowsAbout: [
+        "IoT",
+        "BLE",
+        "LoRaWAN",
+        "Embedded systems",
+        "Product strategy",
+        "Entrepreneurship",
+      ],
       address: {
         "@type": "PostalAddress",
         addressLocality: geo.city,
@@ -35,11 +47,19 @@ const homeStructuredData = {
       },
     },
     {
+      "@type": "Organization",
+      "@id": orgId,
+      name: "Beckkon Systems Pvt. Ltd.",
+      url: portfolio.beckkon.linkHref,
+      description: portfolio.beckkon.summary,
+      founder: { "@id": personId },
+    },
+    {
       "@type": "ProfilePage",
       "@id": profilePageId,
       name: seo.title,
       url,
-      description: `Portfolio profile for ${profile.name}, a ${profile.role} in ${profile.location}.`,
+      description: `Portfolio profile for ${profile.name}, ${profile.role} at ${profile.organisation}.`,
       mainEntity: { "@id": personId },
       about: { "@id": personId },
       inLanguage: "en",
@@ -49,7 +69,7 @@ const homeStructuredData = {
       "@id": websiteId,
       name: seo.applicationName,
       url,
-      description: `${profile.name}'s portfolio of frontend work, projects, and contact details.`,
+      description: seo.description,
       publisher: { "@id": personId },
       inLanguage: "en",
     },

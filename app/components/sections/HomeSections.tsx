@@ -1,186 +1,219 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 
-import { getFeaturedProjects } from "@/app/types/project";
-import OptimizedImage from "@/app/components/ui/OptimizedImage";
+import Reveal from "@/app/components/ui/Reveal";
+import SectionHeader from "@/app/components/ui/SectionHeader";
+import ProjectCard from "@/app/components/ui/ProjectCard";
+import CapabilityGrid from "@/app/components/sections/CapabilityGrid";
+import Timeline from "@/app/components/sections/Timeline";
 import { Icon } from "@/app/lib/icons";
 import portfolio from "@/app/lib/config/portfolio";
 
 export default function HomeSections() {
-  const featuredProjects = getFeaturedProjects();
-  const { home, principles, status, sections } = portfolio;
-  const liveLabel = sections.projectLabels.live;
-  const sourceLabel = sections.projectLabels.source;
+  const { home, beckkon, projects, capabilities, journey } = portfolio;
+
+  const featured = projects.filter((project) => project.featured);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-28 px-4 pb-8 sm:px-6 lg:space-y-36">
-      <section className="rounded-[2rem] bg-white/[0.025] p-6 sm:p-8 sm:shadow-[0_24px_80px_rgba(0,0,0,0.22)] lg:p-10">
-        <div className="max-w-3xl space-y-4">
-          <div className="section-kicker w-fit">
-            <span>{home.principlesKicker}</span>
-          </div>
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.9rem]">
-            {home.principlesTitle}
-          </h2>
-          <p className="max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
-            {home.principlesDescription}
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          {principles.map((card, index) => {
-            return (
-              <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="rounded-2xl bg-white/[0.035] p-6 transition-colors hover:bg-white/[0.055]"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-white/[0.06] p-3">
-                    <Icon name={card.icon} className="h-4 w-4 text-brand-primary" />
-                  </div>
-                  <h3 className="text-base font-semibold text-white">
-                    {card.title}
-                  </h3>
-                </div>
-                <p className="mt-4 text-sm leading-7 text-white/68">
-                  {card.body}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Link
-            href={home.aboutCta.href}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
-          >
-            {home.aboutCta.label}
-            <Icon name={home.aboutCta.icon} className="h-4 w-4" />
-          </Link>
-          <Link
-            href={home.projectsCta.href}
-            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.1]"
-          >
-            {home.projectsCta.label}
-            <Icon name={home.projectsCta.icon} className="h-4 w-4 text-brand-signal" />
-          </Link>
-        </div>
-      </section>
-
-      <section className="space-y-8">
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <div className="max-w-3xl space-y-3">
-            <div className="section-kicker w-fit">
-              <span>{home.workKicker}</span>
+    <>
+      <div className="shell space-y-20 pb-4 sm:space-y-28">
+        {/* About preview */}
+        <section aria-labelledby="about-preview" className="grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <Reveal>
+            <SectionHeader
+              id="about-preview"
+              eyebrow={home.aboutKicker}
+              heading={[
+                { text: "A builder working across" },
+                { text: "hardware, software and business.", accent: true },
+              ]}
+            />
+          </Reveal>
+          <Reveal delay={120} className="lg:pt-2">
+            <div className="max-w-2xl space-y-5 text-base leading-8 text-ink-soft">
+              {home.aboutBody.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              {home.workTitle}
-            </h2>
-            <p className="max-w-2xl text-base leading-7 text-white/72">
-              {home.workDescription}
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45 }}
-            className="shrink-0 lg:pb-1"
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-55" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
-              </span>
-              <span className="text-xs uppercase tracking-[0.24em] text-white/55">
-                {status.label}
-              </span>
-            </div>
-            <p className="mt-2 text-sm font-medium text-white/80">
-              {status.note}
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          {featuredProjects.map((project) => (
-            <article
-              key={project.id}
-              className="flex flex-col overflow-hidden rounded-[2rem] bg-white/[0.03] transition-transform duration-300 sm:shadow-[0_24px_70px_rgba(0,0,0,0.24)] sm:hover:-translate-y-1"
+            <Link
+              href={home.aboutCta.href}
+              className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-emerald link-underline"
             >
-              <div className="relative aspect-16/10 overflow-hidden bg-white/3">
-                <OptimizedImage
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="opacity-70"
-                />
-              </div>
-              <div className="flex flex-1 flex-col gap-4 p-6 sm:p-8">
-                <h3 className="text-2xl font-semibold text-white">
-                  {project.title}
-                </h3>
-                <p className="max-w-2xl text-sm leading-7 text-white/70">
-                  {project.longDescription}
-                </p>
+              {home.aboutCta.label}
+              <Icon name="ArrowRight" className="h-4 w-4" />
+            </Link>
+          </Reveal>
+        </section>
+      </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-white/[0.055] px-3 py-1 text-xs font-medium text-white/70"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
-                  {project.liveUrl && (
-                    <Link
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary transition-opacity hover:opacity-80"
-                    >
-                      {liveLabel}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                  )}
-                  {project.githubUrl && (
-                    <Link
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-white/72 transition-opacity hover:opacity-90"
-                    >
-                      <Github className="h-4 w-4" />
-                      {sourceLabel}
-                    </Link>
-                  )}
-                  <Link
-                    href="/projects"
-                    className="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-white/60 transition-opacity hover:opacity-90"
-                  >
-                    Details
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+      {/* Beckkon — prominent dark band */}
+      <section aria-labelledby="beckkon-heading" className="night mt-20 sm:mt-28">
+        <div className="shell py-16 sm:py-20">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+            <Reveal>
+              <p className="eyebrow">{beckkon.kicker}</p>
+              <h2
+                id="beckkon-heading"
+                className="display-xl mt-4 text-[clamp(2.2rem,5vw,3.75rem)] text-[#f4f2ec]"
+              >
+                {beckkon.name}
+              </h2>
+              <p className="mt-5 max-w-md text-lg leading-8 text-[#c9c8bd]">
+                {beckkon.tagline}
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/beckkon"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#f4f2ec] px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-white"
+                >
+                  Read the case study
+                  <Icon name="ArrowRight" className="h-4 w-4" />
+                </Link>
+                <a
+                  href={beckkon.linkHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-night-line px-6 py-3 text-sm font-medium text-[#e8e6dc] transition-colors hover:border-[#6f6e63]"
+                >
+                  {beckkon.linkLabel}
+                  <Icon name="ArrowUpRight" className="h-4 w-4" />
+                </a>
               </div>
-            </article>
-          ))}
+            </Reveal>
+
+            <Reveal delay={120}>
+              <p className="max-w-2xl text-base leading-8 text-[#c9c8bd]">
+                {beckkon.summary}
+              </p>
+              <ul className="mt-8 grid gap-px overflow-hidden border border-night-line bg-night-line sm:grid-cols-2">
+                {beckkon.products.slice(0, 4).map((product) => (
+                  <li key={product.title} className="bg-night-base p-5">
+                    <h3 className="flex items-center gap-2 text-sm font-semibold text-[#f4f2ec]">
+                      <span
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full bg-[#4fb894]"
+                      />
+                      {product.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#a3a297]">
+                      {product.body}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
         </div>
       </section>
-    </div>
+
+      <div className="shell space-y-20 py-20 sm:space-y-28 sm:py-28">
+        {/* Selected work */}
+        <section aria-labelledby="work-heading">
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <Reveal>
+              <SectionHeader
+                id="work-heading"
+                eyebrow={home.workKicker}
+                heading={[{ text: "Systems" }, { text: "I'm building.", accent: true }]}
+                description={home.workDescription}
+                className="max-w-2xl"
+              />
+            </Reveal>
+            <Reveal delay={120}>
+              <Link
+                href={home.projectsCta.href}
+                className="inline-flex items-center gap-2 text-sm font-medium text-emerald link-underline"
+              >
+                {home.projectsCta.label}
+                <Icon name="ArrowRight" className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {featured.map((project, index) => (
+              <Reveal key={project.id} delay={index * 80}>
+                <ProjectCard project={project} index={index} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* Capabilities */}
+        <section aria-labelledby="capabilities-heading">
+          <Reveal>
+            <SectionHeader
+              id="capabilities-heading"
+              eyebrow={home.capabilitiesKicker}
+              heading={[
+                { text: "What I bring" },
+                { text: "to a build.", accent: true },
+              ]}
+              description={home.capabilitiesDescription}
+              className="max-w-2xl"
+            />
+          </Reveal>
+          <div className="mt-10">
+            <Reveal delay={80}>
+              <CapabilityGrid items={capabilities.items} />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Journey */}
+        <section aria-labelledby="journey-heading">
+          <Reveal>
+            <SectionHeader
+              id="journey-heading"
+              eyebrow={home.journeyKicker}
+              heading={[{ text: "Where I'm" }, { text: "coming from.", accent: true }]}
+              description={journey.description}
+              className="max-w-2xl"
+            />
+          </Reveal>
+          <div className="mt-10">
+            <Reveal delay={80}>
+              <Timeline items={journey.items} />
+            </Reveal>
+          </div>
+        </section>
+      </div>
+
+      {/* Contact CTA */}
+      <section aria-labelledby="cta-heading" className="shell pb-20 sm:pb-28">
+        <Reveal>
+          <div className="grid gap-8 border border-line bg-emerald-soft p-8 sm:p-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div>
+              <h2
+                id="cta-heading"
+                className="display-xl text-[clamp(1.9rem,4vw,2.85rem)] text-ink"
+              >
+                {home.ctaTitle}
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-8 text-ink-soft">
+                {home.ctaBody}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-emerald-deep"
+              >
+                Get in touch
+                <Icon name="ArrowRight" className="h-4 w-4" />
+              </Link>
+              <a
+                href={portfolio.beckkon.linkHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-ink"
+              >
+                Beckkon.com
+                <Icon name="ArrowUpRight" className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+    </>
   );
 }
-

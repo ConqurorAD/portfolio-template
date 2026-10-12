@@ -1,348 +1,179 @@
-"use client";
+import Link from "next/link";
 
-import * as LucideIcons from "lucide-react";
-import { motion, type Variants } from "framer-motion";
-import {
-  Briefcase,
-  Code2,
-  GraduationCap,
-  MapPin,
-} from "lucide-react";
-
-import Tooltip from "@/app/components/ui/Tooltip";
-import OptimizedImage from "@/app/components/ui/OptimizedImage";
+import Reveal from "@/app/components/ui/Reveal";
+import Timeline from "@/app/components/sections/Timeline";
 import { Icon } from "@/app/lib/icons";
 import portfolio from "@/app/lib/config/portfolio";
 
-const skillIcons = {
-  React: LucideIcons.Atom,
-  "Next.js": LucideIcons.Triangle,
-  TypeScript: LucideIcons.FileCode,
-  Tailwind: LucideIcons.Palette,
-  "Node.js": LucideIcons.Server,
-  Express: LucideIcons.Rocket,
-  MongoDB: LucideIcons.Database,
-  Git: LucideIcons.GitBranch,
-  Figma: LucideIcons.Frame,
-  Postman: LucideIcons.Mail,
-  Linux: LucideIcons.Terminal,
-};
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.09 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: "easeOut" },
-  },
-};
-
-export default function About() {
-  const {
-    profile,
-    images,
-    socials,
-    introduction,
-    workExperience,
-    education,
-    skills,
-    aboutPage,
-  } = portfolio;
+export default function AboutPage() {
+  const { aboutPage, profile, geo, socials, journey } = portfolio;
+  const { beckkon } = portfolio;
 
   return (
-    <section id="about" className="px-4 py-16 sm:px-6 lg:py-20">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[340px_1fr] lg:gap-10">
-        <aside className="space-y-5 lg:sticky lg:top-28 lg:h-fit">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="section-shell p-5 sm:p-6"
-          >
-            <div className="mx-auto w-full max-w-60 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20">
-              <OptimizedImage
-                src={images.about}
-                alt={profile.name}
-                width={640}
-                height={640}
-                priority
-                className="w-full object-cover"
-              />
-            </div>
-
-            <div className="mt-6 space-y-3 text-center">
-              <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-                {aboutPage.profileBadge}
-              </p>
-              <h1 className="text-3xl font-semibold tracking-tight text-white">
-                {profile.name}
-              </h1>
-              <p className="text-sm text-white/68">{profile.role}</p>
-              <div className="flex items-center justify-center gap-2 text-sm text-white/65">
-                <MapPin className="h-4 w-4 text-brand-signal" />
-                <span>{profile.location}</span>
-              </div>
-            </div>
-
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="grid grid-cols-2 gap-3"
-          >
-            {socials.map((link) => {
-              return (
-                <Tooltip key={link.name} content={link.tooltip ?? ""}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="surface flex items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm text-white/84 transition-colors hover:border-white/18 hover:bg-white/6"
-                  >
-                    <span>{link.name}</span>
-                    <Icon name={link.icon} className="h-4 w-4 text-brand-primary" />
-                  </a>
-                </Tooltip>
-              );
-            })}
-          </motion.div>
-        </aside>
-
-        <div className="space-y-12">
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
-            className="section-shell p-6 sm:p-8"
-          >
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center gap-3"
-            >
-              <div className="h-px w-10 bg-(--brand-primary)" />
-              <p className="text-xs uppercase tracking-[0.28em] text-white/50">
-                {aboutPage.introductionTitle}
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="mt-6 space-y-4 text-base leading-7 text-white/75 sm:text-lg"
-            >
-              {introduction
-                .trim()
-                .split("\n\n")
-                .filter(Boolean)
-                .map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-            </motion.div>
-          </motion.section>
-
-          <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-            <motion.section
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={containerVariants}
-              className="section-shell p-6 sm:p-8"
-            >
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center gap-3"
+    <div className="shell py-14 sm:py-20">
+      <header className="max-w-3xl">
+        <Reveal>
+          <p className="eyebrow">{aboutPage.kicker}</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="display-xl mt-5 text-[clamp(2.2rem,5.5vw,4rem)] text-ink">
+            {aboutPage.heading.map((line) => (
+              <span
+                key={line.text}
+                className={line.accent ? "block text-emerald" : "block"}
               >
-                <Briefcase className="h-5 w-5 text-brand-primary" />
-                <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  {aboutPage.experienceTitle}
-                </h2>
-              </motion.div>
+                {line.text}
+              </span>
+            ))}
+          </h1>
+        </Reveal>
+        <Reveal delay={160}>
+          <p className="mt-7 text-lg leading-8 text-ink-soft">
+            {aboutPage.intro}
+          </p>
+        </Reveal>
+      </header>
 
-              <div className="relative mt-6 space-y-5 pl-8">
-                <div
-                  aria-hidden="true"
-                  className="absolute bottom-6 left-[7px] top-6 w-px bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.65))]"
-                />
-                {workExperience.map((job) => {
-                  const isCurrent = job.current ?? job.period.includes("Present");
-
-                  return (
-                  <motion.article
-                    key={job.title}
-                    variants={itemVariants}
-                    className="relative rounded-2xl bg-white/3 p-5 transition-colors hover:bg-white/5"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`absolute -left-[2.05rem] flex h-4 w-4 items-center justify-center ${
-                        isCurrent ? "top-6" : "top-4"
-                      }`}
-                    >
-                      {isCurrent && (
-                        <span className="absolute h-4 w-4 animate-ping rounded-full bg-brand-primary/55" />
-                      )}
-                      <span
-                        className={`relative h-3 w-3 rounded-full ${
-                          isCurrent
-                            ? "bg-brand-primary shadow-[0_0_14px_rgba(91,124,255,0.9)]"
-                            : "bg-white/35"
-                        }`}
-                      />
+      <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+        <div className="space-y-16">
+          <section aria-labelledby="interests-heading">
+            <Reveal>
+              <h2
+                id="interests-heading"
+                className="font-display text-2xl font-medium tracking-tight text-ink"
+              >
+                {aboutPage.interestsTitle}
+              </h2>
+            </Reveal>
+            <ul className="mt-8 border-t border-line">
+              {aboutPage.interests.map((interest, index) => (
+                <Reveal key={interest} delay={index * 60}>
+                  <li className="flex items-baseline gap-5 border-b border-line py-4">
+                    <span className="font-display text-sm text-emerald">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <p className="text-lg font-semibold text-white">
-                          {job.title}
-                        </p>
-                        <p className="mt-1 text-sm text-white/65">
-                          {job.company}
-                        </p>
-                      </div>
-                      <span className="rounded-full border border-white/10 bg-white/3 px-3 py-1 text-xs uppercase tracking-[0.22em] text-white/55">
-                        {job.period}
-                      </span>
-                    </div>
-                    <p className="mt-4 max-w-2xl text-sm leading-6 text-white/70">
-                      {job.description}
-                    </p>
-                  </motion.article>
-                  );
-                })}
-              </div>
-            </motion.section>
-
-            <motion.section
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={containerVariants}
-              className="section-shell p-6 sm:p-8"
-            >
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center gap-3"
-              >
-                <GraduationCap className="h-5 w-5 text-brand-signal" />
-                <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  {aboutPage.educationTitle}
-                </h2>
-              </motion.div>
-
-              <div className="relative mt-6 space-y-3 pl-8">
-                <div
-                  aria-hidden="true"
-                  className="absolute bottom-6 left-[7px] top-6 w-px bg-[linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.16))]"
-                />
-                {education.map((item) => {
-                  const isCurrent = item.current ?? false;
-
-                  return (
-                  <motion.article
-                    key={item.title}
-                    variants={itemVariants}
-                    className="relative rounded-2xl bg-white/3 p-5 transition-colors hover:bg-white/5"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="absolute -left-[2.05rem] top-4 flex h-4 w-4 items-center justify-center"
-                    >
-                      {isCurrent && (
-                        <span className="absolute h-4 w-4 animate-ping rounded-full bg-brand-primary/55" />
-                      )}
-                      <span
-                        className={`relative h-3 w-3 rounded-full ${
-                          isCurrent
-                            ? "bg-brand-primary shadow-[0_0_14px_rgba(91,124,255,0.9)]"
-                            : "bg-white/35"
-                        }`}
-                      />
+                    <span className="text-base leading-7 text-ink-soft">
+                      {interest}
                     </span>
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <p className="text-base font-semibold text-white">
-                          {item.title}
-                        </p>
-                        <p className="mt-1 text-sm text-white/65">
-                          {item.school}
-                        </p>
-                      </div>
-                      <span className="rounded-full border border-white/10 bg-white/3 px-3 py-1 text-xs text-white/60">
-                        {item.info}
-                      </span>
-                    </div>
-                  </motion.article>
-                  );
-                })}
-              </div>
-            </motion.section>
-          </div>
-
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
-            className="section-shell p-6 sm:p-8"
-          >
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center gap-3"
-              >
-                <Code2 className="h-5 w-5 text-brand-primary" />
-                <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  {aboutPage.skillsTitle}
-                </h2>
-              </motion.div>
-
-            <div className="mt-6 grid gap-6 lg:grid-cols-3">
-              {Object.entries(skills).map(([category, categorySkills]) => (
-                <motion.div
-                  key={category}
-                  variants={itemVariants}
-                  className="space-y-4"
-                >
-                  <h3 className="text-sm uppercase tracking-[0.24em] text-white/45">
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {categorySkills.map((skill) => {
-                      const Icon =
-                        skillIcons[skill as keyof typeof skillIcons] ||
-                        LucideIcons.Code2;
-
-                      return (
-                        <motion.div
-                          key={skill}
-                          className="group cursor-default rounded-2xl bg-white/3 p-4"
-                        >
-                          <span className="relative inline-flex p-2 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
-                            <Icon className="h-5 w-5 text-brand-primary" />
-                          </span>
-                          <p className="relative mt-3 text-sm font-medium text-white">
-                            {skill}
-                          </p>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
+                  </li>
+                </Reveal>
               ))}
+            </ul>
+          </section>
+
+          <section aria-labelledby="focus-heading">
+            <Reveal>
+              <h2
+                id="focus-heading"
+                className="font-display text-2xl font-medium tracking-tight text-ink"
+              >
+                {aboutPage.focusTitle}
+              </h2>
+            </Reveal>
+            <Reveal delay={80}>
+              <p className="mt-5 max-w-2xl text-base leading-8 text-ink-soft">
+                {aboutPage.focusBody}
+              </p>
+            </Reveal>
+          </section>
+
+          <section aria-labelledby="journey-heading">
+            <Reveal>
+              <h2
+                id="journey-heading"
+                className="font-display text-2xl font-medium tracking-tight text-ink"
+              >
+                Journey
+              </h2>
+            </Reveal>
+            <div className="mt-8">
+              <Timeline items={journey.items} />
             </div>
-          </motion.section>
+          </section>
         </div>
+
+        <aside className="lg:sticky lg:top-24 lg:h-fit">
+          <Reveal delay={120}>
+            <div className="border border-line bg-paper-soft/50 p-6">
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-ink font-display text-2xl font-medium text-paper">
+                AV
+              </div>
+              <p className="mt-6 text-lg font-semibold tracking-tight text-ink">
+                {profile.name}
+              </p>
+              <p className="mt-1 text-sm leading-6 text-ink-soft">
+                {profile.role}
+                <br />
+                {profile.organisation}
+              </p>
+
+              <dl className="mt-6 space-y-3 border-t border-line pt-5 text-sm">
+                <div className="flex items-center gap-2.5 text-ink-soft">
+                  <Icon name="MapPin" className="h-4 w-4 text-emerald" />
+                  {geo.city}, {geo.country}
+                </div>
+                <div className="flex items-center gap-2.5 text-ink-soft">
+                  <Icon name="GraduationCap" className="h-4 w-4 text-emerald" />
+                  IIT (BHU), Varanasi
+                </div>
+              </dl>
+
+              <Link
+                href="/contact"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-emerald-deep"
+              >
+                Get in touch
+                <Icon name="ArrowRight" className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={180}>
+            <div className="mt-4 border border-line p-6">
+              <p className="text-[0.68rem] uppercase tracking-[0.24em] text-muted">
+                Elsewhere
+              </p>
+              <ul className="mt-4 space-y-3 text-sm">
+                {socials.map((social) => {
+                  const external = social.href.startsWith("http");
+                  return (
+                    <li key={social.name}>
+                      <a
+                        href={social.href}
+                        {...(external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="inline-flex items-center gap-2.5 text-ink-soft transition-colors hover:text-ink"
+                      >
+                        <Icon name={social.icon} className="h-4 w-4 text-emerald" />
+                        {social.name}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <div className="mt-4 border border-line bg-emerald-soft p-6">
+              <p className="text-[0.68rem] uppercase tracking-[0.24em] text-emerald-deep">
+                Currently building
+              </p>
+              <p className="mt-3 text-sm font-medium leading-6 text-ink">
+                {beckkon.name} — {beckkon.tagline}
+              </p>
+              <Link
+                href="/beckkon"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-deep link-underline"
+              >
+                Read the case study
+                <Icon name="ArrowRight" className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </Reveal>
+        </aside>
       </div>
-    </section>
+    </div>
   );
 }
-

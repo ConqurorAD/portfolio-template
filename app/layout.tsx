@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 
 import "./globals.css";
-import SystemBar from "@/app/components/layout/SystemBar";
 import Navigation from "@/app/components/layout/Navigation";
 import Footer from "@/app/components/layout/Footer";
-import MouseGlow from "@/app/components/layout/MouseGlow";
-import ProgressBar from "@/app/components/ui/ProgressBar";
-import { cn } from "@/app/lib/utils/cn";
 import portfolio from "@/app/lib/config/portfolio";
 
-const { seo, url } = portfolio;
+const { seo, url, profile } = portfolio;
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -26,6 +22,13 @@ const geistMono = Geist_Mono({
   preload: false,
 });
 
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(url),
 
@@ -37,9 +40,9 @@ export const metadata: Metadata = {
   description: seo.description,
 
   applicationName: seo.applicationName,
-  authors: [{ name: portfolio.profile.name, url }],
-  creator: portfolio.profile.name,
-  publisher: portfolio.profile.name,
+  authors: [{ name: profile.name, url }],
+  creator: profile.name,
+  publisher: profile.name,
   category: "technology",
   referrer: "origin-when-cross-origin",
 
@@ -77,7 +80,7 @@ export const metadata: Metadata = {
         url: `${url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: `${portfolio.profile.name} - ${portfolio.profile.role} in ${portfolio.profile.location}`,
+        alt: `${profile.name} — ${profile.role} at ${profile.organisation}`,
       },
     ],
   },
@@ -98,22 +101,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(
-        geistSans.variable,
-        geistMono.variable,
-        geistSans.className,
-      )}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${geistSans.className}`}
     >
-      <body className="antialiased app-bg text-foreground overflow-x-hidden transition-colors duration-300">
-        <div aria-hidden="true" className="lamp-beam" />
+      <body className="flex min-h-screen flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-paper"
+        >
+          Skip to content
+        </a>
 
-        <MouseGlow />
-
-        <SystemBar />
-        <ProgressBar />
         <Navigation />
-
-        <main className="relative z-10  pt-0 ">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <Footer />
 
         <Script
